@@ -58,7 +58,6 @@ button {
     z-index: 9999;
     display: flex;
     perspective: 1400px;
-    /* Transparent रखा गया है ताकि दरवाजे खुलते ही पीछे का कार्ड दिखे */
     background: transparent;
     transition: visibility 0.3s;
 }
@@ -88,7 +87,6 @@ button {
     transform-origin: right center;
 }
 
-/* दरवाजे खुलने का 3D Folding Effect */
 #doors-screen.open .door-left {
     transform: rotateY(-105deg);
 }
@@ -450,7 +448,7 @@ button {
     margin-top: 2px;
 }
 
-/* ================= BUTTONS & SHARE BOX ================= */
+/* ================= BUTTONS & ADMIN PANEL ================= */
 .btn-whatsapp {
     display: inline-block;
     background: linear-gradient(45deg, #1ebe5d, #128C7E);
@@ -490,7 +488,7 @@ button {
     margin: 6px;
 }
 
-#guest-input {
+.input-field {
     padding: 13px 15px;
     border: 2px solid var(--gold);
     border-radius: 12px;
@@ -500,6 +498,50 @@ button {
     text-align: center;
     margin-bottom: 10px;
     font-family: 'Mukta', sans-serif;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: var(--dark-pink);
+}
+
+/* Admin Trigger & Protected Box */
+#admin-toggle-btn {
+    background: transparent;
+    color: #9e6b84;
+    border: 1px dashed #d4af37;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-top: 14px;
+    opacity: 0.75;
+}
+
+#admin-login-box {
+    display: none;
+    background: #fff0f6;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 18px 15px;
+    margin: 15px auto 5px auto;
+    max-width: 380px;
+}
+
+#admin-share-section {
+    display: none;
+    background: #fff0f6;
+    padding: 22px 15px;
+    border-radius: 18px;
+    border: 2px dashed var(--gold);
+    margin-top: 20px;
+}
+
+#admin-error-msg {
+    color: #c62828;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 6px;
+    display: none;
 }
 
 #music-btn {
@@ -574,7 +616,7 @@ button {
     <main id="main-content">
         <div class="invitation-card">
 
-            <!-- STEP 1: GUEST PERSONALIZED GREETING (Always Visible) -->
+            <!-- STEP 1: GUEST PERSONALIZED GREETING -->
             <div id="guest-greeting" class="reveal-item visible">
                 <div class="greeting-label">✨ सप्रेम सादर आमंत्रण ✨</div>
                 <span id="guest-name-display">माननीय अतिथि महोदय</span>
@@ -745,17 +787,15 @@ button {
                 </a>
             </div>
 
-            <div class="section-divider"></div>
-
-            <!-- STEP 9: PERSONALIZED GUEST LINK GENERATOR FOR WHATSAPP -->
-            <div class="reveal-item" style="background: #fff0f6; padding: 22px 15px; border-radius: 18px; border: 2px dashed var(--gold);">
+            <!-- STEP 9: ADMIN-ONLY PROTECTED GUEST LINK GENERATOR -->
+            <div id="admin-share-section">
                 <h2 style="font-size: 22px; color: var(--dark-pink); margin-bottom: 8px;">
-                    💌 मेहमान के नाम से निमंत्रण लिंक बनाएँ
+                    💌 मेहमान के नाम से निमंत्रण लिंक बनाएँ (Admin)
                 </h2>
                 <p style="font-size: 15px; margin-bottom: 12px; color: #555;">
                     नीचे अतिथि का नाम लिखें, उनके नाम का कार्ड तुरंत तैयार हो जाएगा:
                 </p>
-                <input id="guest-input" type="text" placeholder="अतिथि का नाम लिखें (जैसे: राहुल कुमार)">
+                <input id="guest-input" class="input-field" type="text" placeholder="अतिथि का नाम लिखें (जैसे: राहुल कुमार)">
                 <br>
                 <button type="button" class="btn-whatsapp" id="share-btn">
                     📲 WhatsApp पर अतिथि को भेजें
@@ -763,10 +803,30 @@ button {
                 <button type="button" class="btn-copy" id="copy-btn">
                     🔗 लिंक कॉपी करें
                 </button>
+                <br>
+                <button type="button" id="admin-lock-btn" style="background: none; border: none; color: #880e4f; font-size: 14px; margin-top: 12px; text-decoration: underline;">
+                    🔒 पैनल लॉक करें
+                </button>
             </div>
 
             <footer style="margin-top: 30px; padding-top: 15px; color: var(--dark-pink); font-weight: bold;">
                 ❤️ आपकी गरिमामयी उपस्थिति ही हमारा सौभाग्य है ❤️
+                <br>
+                <!-- Discreet Admin Button -->
+                <button type="button" id="admin-toggle-btn">🔒 Admin</button>
+
+                <!-- Password Only Login Box (No User ID) -->
+                <div id="admin-login-box">
+                    <p style="font-size: 16px; color: var(--dark-pink); margin-bottom: 10px;">
+                        🔑 केवल एडमिन पासवर्ड दर्ज करें:
+                    </p>
+                    <input id="admin-pass-input" class="input-field" type="password" placeholder="Admin Password">
+                    <br>
+                    <button type="button" class="btn-call" id="admin-unlock-btn" style="padding: 9px 22px; font-size: 15px;">
+                        Unlock करें
+                    </button>
+                    <div id="admin-error-msg">❌ गलत पासवर्ड! कृपया सही पासवर्ड डालें।</div>
+                </div>
             </footer>
 
         </div>
@@ -783,6 +843,16 @@ button {
     const doorGuestLine = document.getElementById("door-guest-line");
     const guestInput = document.getElementById("guest-input");
 
+    // Admin Elements
+    const adminToggleBtn = document.getElementById("admin-toggle-btn");
+    const adminLoginBox = document.getElementById("admin-login-box");
+    const adminPassInput = document.getElementById("admin-pass-input");
+    const adminUnlockBtn = document.getElementById("admin-unlock-btn");
+    const adminErrorMsg = document.getElementById("admin-error-msg");
+    const adminShareSection = document.getElementById("admin-share-section");
+    const adminLockBtn = document.getElementById("admin-lock-btn");
+
+    const ADMIN_PASSWORD = "Abhi" + "@2026";
     let isOpened = false;
     let flowerInterval = null;
 
@@ -795,6 +865,9 @@ button {
                 const cleanName = decodeURIComponent(rawGuest).replace(/[-_+]/g, " ").trim();
                 guestNameDisplay.textContent = "प्रिय " + cleanName + " जी";
                 doorGuestLine.textContent = "स्वागतम्: प्रिय " + cleanName + " जी";
+            } else {
+                guestNameDisplay.textContent = "माननीय अतिथि महोदय";
+                doorGuestLine.textContent = "सप्रेम निमंत्रण पत्र";
             }
         } catch (err) {
             console.log("Guest param parse note:", err);
@@ -802,37 +875,87 @@ button {
     }
     loadGuestName();
 
-    // नाम टाइप करते समय ऊपर लाइव प्रीव्यू भी दिखेगा
+    // 2. ADMIN AUTHENTICATION (Password Only: Abhi@2026)
+    function unlockAdminPanel() {
+        adminLoginBox.style.display = "none";
+        adminToggleBtn.style.display = "none";
+        adminErrorMsg.style.display = "none";
+        adminShareSection.style.display = "block";
+        adminPassInput.value = "";
+        try {
+            sessionStorage.setItem("wedding_admin_unlocked", "true");
+        } catch (e) {}
+    }
+
+    function lockAdminPanel() {
+        adminShareSection.style.display = "none";
+        adminLoginBox.style.display = "none";
+        adminToggleBtn.style.display = "inline-block";
+        try {
+            sessionStorage.removeItem("wedding_admin_unlocked");
+        } catch (e) {}
+    }
+
+    // अगर एडमिन ने इसी टैब में पहले अनलॉक किया था तो खुला रखें
+    try {
+        if (sessionStorage.getItem("wedding_admin_unlocked") === "true") {
+            unlockAdminPanel();
+        }
+    } catch (e) {}
+
+    adminToggleBtn.addEventListener("click", function () {
+        if (adminLoginBox.style.display === "block") {
+            adminLoginBox.style.display = "none";
+        } else {
+            adminLoginBox.style.display = "block";
+            adminErrorMsg.style.display = "none";
+            adminPassInput.focus();
+        }
+    });
+
+    function verifyAdminPassword() {
+        const enteredPass = adminPassInput.value.trim();
+        if (enteredPass === ADMIN_PASSWORD) {
+            unlockAdminPanel();
+            adminShareSection.scrollIntoView({ behavior: "smooth" });
+        } else {
+            adminErrorMsg.style.display = "block";
+        }
+    }
+
+    adminUnlockBtn.addEventListener("click", verifyAdminPassword);
+    adminPassInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            verifyAdminPassword();
+        }
+    });
+
+    adminLockBtn.addEventListener("click", lockAdminPanel);
+
+    // नाम टाइप करते समय ऊपर लाइव प्रीव्यू भी दिखेगा (केवल Admin के लिए)
     guestInput.addEventListener("input", function () {
         const val = guestInput.value.trim();
         if (val) {
             guestNameDisplay.textContent = "प्रिय " + val + " जी";
         } else {
             loadGuestName();
-            if (!window.location.search.includes("guest=")) {
-                guestNameDisplay.textContent = "माननीय अतिथि महोदय";
-            }
         }
     });
 
-    // 2. दरवाजा खोलने का फंक्शन (Zero Scroll Block Bug)
+    // 3. दरवाजा खोलने का फंक्शन
     openBtn.addEventListener("click", function () {
         if (isOpened) return;
         isOpened = true;
 
-        // तुरंत स्क्रॉल अनलॉक करें और दरवाजे के टच को पारदर्शी बनाएं
         document.body.classList.remove("locked");
         doorsScreen.style.pointerEvents = "none";
 
-        // बीच के बटन बॉक्स को फेड़ आउट करें और दरवाजे खोलें
         doorCenterBox.style.opacity = "0";
         doorCenterBox.style.transform = "translate(-50%, -50%) scale(0.85)";
         doorsScreen.classList.add("open");
 
-        // फूलों की बारिश शुरू करें
         startFlowerRain();
 
-        // बैकग्राउंड म्यूजिक चलाएं
         musicBtn.style.display = "block";
         music.play().then(function () {
             musicBtn.textContent = "🔊 Music ON";
@@ -840,13 +963,12 @@ button {
             musicBtn.textContent = "▶ Music चलाएँ";
         });
 
-        // एनीमेशन पूरा होने पर दरवाजे हटाएँ
         setTimeout(function () {
             doorsScreen.style.display = "none";
         }, 2200);
     });
 
-    // 3. स्क्रॉल करने पर एक-एक सेक्शन का सिनेमैटिक रिवील
+    // 4. स्क्रॉल करने पर एक-एक सेक्शन का सिनेमैटिक रिवील
     const revealElements = document.querySelectorAll(".reveal-item");
     if ("IntersectionObserver" in window) {
         const observer = new IntersectionObserver(function (entries) {
@@ -869,7 +991,7 @@ button {
         });
     }
 
-    // 4. फूलों की बारिश (Flower Rain)
+    // 5. फूलों की बारिश (Flower Rain)
     function startFlowerRain() {
         if (flowerInterval) return;
         const petals = ["🌸", "🌺", "🌷", "✨", "🌹"];
@@ -899,7 +1021,7 @@ button {
         }, 300);
     }
 
-    // 5. म्यूजिक ऑन/ऑफ बटन
+    // 6. म्यूजिक ऑन/ऑफ बटन
     musicBtn.addEventListener("click", function () {
         if (music.paused) {
             music.play().then(function () {
@@ -913,7 +1035,7 @@ button {
         }
     });
 
-    // 6. लाइव काउंटडाउन टाइमर (02 दिसंबर 2026)
+    // 7. लाइव काउंटडाउन टाइमर (02 दिसंबर 2026)
     const targetTime = new Date("2026-12-02T00:00:00+05:30").getTime();
 
     function updateCountdown() {
@@ -942,7 +1064,7 @@ button {
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // 7. अतिथि के नाम वाला लिंक बनाना (Local & GitHub दोनों पर क्रैश-फ्री)
+    // 8. अतिथि के नाम वाला लिंक बनाना (केवल Admin द्वारा)
     function buildGuestURL(guestName) {
         const cleanBase = window.location.href.split("?")[0].split("#")[0];
         return cleanBase + "?guest=" + encodeURIComponent(guestName);
@@ -965,12 +1087,17 @@ button {
             "💌 *आपका व्यक्तिगत डिजिटल निमंत्रण कार्ड यहाँ खोलें:*\n" +
             inviteLink;
 
-        // यह लिंक WhatsApp कांटेक्ट लिस्ट खोलेगा ताकि आप किसी भी मेहमान को भेज सकें
         window.location.href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
     });
 
     document.getElementById("copy-btn").addEventListener("click", function () {
-        const guestName = guestInput.value.trim() || "अतिथि";
+        const guestName = guestInput.value.trim();
+        if (!guestName) {
+            alert("कृपया पहले बॉक्स में अतिथि का नाम लिखें!");
+            guestInput.focus();
+            return;
+        }
+
         const inviteLink = buildGuestURL(guestName);
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
