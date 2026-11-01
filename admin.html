@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Wedding Card Studio - Admin CMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary: #7b003a;
+    --secondary: #ad1457;
+    --gold: #d4af37;
+    --bg: #fff5f8;
+    --text: #2c0014;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    padding: 16px;
+}
+
+/* Login Screen */
+#login-screen {
+    max-width: 380px;
+    margin: 70px auto;
+    background: #fff;
+    padding: 26px 20px;
+    border-radius: 18px;
+    border: 2.5px solid var(--gold);
+    box-shadow: 0 10px 30px rgba(123, 0, 58, 0.15);
+    text-align: center;
+}
+
+/* Studio Container */
+#studio-app {
+    display: none;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.studio-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    padding: 18px 20px;
+    border-radius: 16px;
+    border: 2px solid var(--gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 18px;
+}
+
+.card-box {
+    background: #fff;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+}
+
+.card-box h3 {
+    color: var(--primary);
+    font-size: 16px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed var(--gold);
+    padding-bottom: 6px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-family: inherit;
+    outline: none;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--gold);
+}
+
+.btn {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: #fff;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    margin: 3px;
+}
+
+.btn-green { background: linear-gradient(45deg, #1ebe5d, #128C7E); }
+.btn-gold { background: linear-gradient(45deg, #b8860b, #8c6200); }
+.btn-red { background: #c62828; }
+
+/* Saved Records List */
+.record-item {
+    background: #fff9fb;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.record-item strong {
+    display: block;
+    font-size: 13.5px;
+    color: var(--primary);
+}
+
+/* Event Row */
+.event-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+/* Auto-fit Preview Thumbnails */
+.img-preview-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.thumb-box {
+    text-align: center;
+    font-size: 11.5px;
+}
+
+.thumb-box img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+    display: block;
+    margin: 0 auto 4px auto;
+    background: #fff0f5;
+}
+
+@media (max-width: 768px) {
+    .grid-layout { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .event-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+    <!-- 1. HACKPROOF PASSWORD LOGIN (No User ID required) -->
+    <div id="login-screen">
+        <div style="font-size: 36px; margin-bottom: 6px;">🔐</div>
+        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 6px;">Wedding Card Studio</h2>
+        <p style="font-size: 12.5px; color: #666; margin-bottom: 16px;">सुरक्षित स्टूडियो में प्रवेश के लिए केवल एडमिन पासवर्ड दर्ज करें</p>
+        <div class="form-group">
+            <label>एडमिन पासवर्ड (Admin Password):</label>
+            <input type="password" id="login-pass" placeholder="Enter Password">
+        </div>
+        <button type="button" class="btn" id="login-btn" style="width: 100%; padding: 11px;">Studio Unlock करें</button>
+        <p id="login-err" style="color: #c62828; font-size: 12.5px; margin-top: 8px; display: none; font-weight: 600;"></p>
+    </div>
+
+    <!-- 2. MAIN STUDIO WORKSPACE -->
+    <div id="studio-app">
+        <div class="studio-header">
+            <div>
+                <h2 style="font-size: 19px;">🎨 Digital Wedding Card Studio</h2>
+                <p style="font-size: 12px; color: #ffe57f;">Create, Save, Update, Delete & Export 1-Click Ready-to-Host Webpage</p>
+            </div>
+            <div>
+                <button type="button" class="btn btn-gold" id="new-record-btn">➕ नया कार्ड</button>
+                <button type="button" class="btn btn-red" id="logout-btn">🔒 Logout</button>
+            </div>
+        </div>
+
+        <div class="grid-layout">
+            <!-- LEFT SIDEBAR: SAVED RECORDS DATABASE (CRUD) -->
+            <div>
+                <div class="card-box">
+                    <h3>📂 सेव किए गए कार्ड (Saved Records)</h3>
+                    <div id="records-list"></div>
+                    <hr style="margin: 12px 0; border: none; border-top: 1px dashed var(--gold);">
+                    <button type="button" class="btn btn-gold" id="export-db-btn" style="width: 100%; font-size: 12px;">⬇️ Backup JSON डाउनलोड</button>
+                </div>
+            </div>
+
+            <!-- RIGHT EDITOR: COMPLETE WEDDING FORM -->
+            <div>
+                <!-- Groom & Bride -->
+                <div class="card-box">
+                    <h3>1. वर एवं वधू का विवरण (Groom & Bride Details)</h3>
+                    <input type="hidden" id="record-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>वर का नाम (English):</label>
+                            <input type="text" id="f-groom-en">
+                        </div>
+                        <div class="form-group">
+                            <label>वर का नाम (हिंदी):</label>
+                            <input type="text" id="f-groom-hi">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>वर के माता-पिता:</label>
+                            <input type="text" id="f-groom-parents">
+                        </div>
+                        <div class="form-group">
+                            <label>वर का पता:</label>
+                            <input type="text" id="f-groom-addr">
+                        </div>
+                    </div>
+                    <hr style="margin: 10px 0; border: none; border-top: 1px dashed #eee;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>वधू का नाम (English):</label>
+                            <input type="text" id="f-bride-en">
+                        </div>
+                        <div class="form-group">
+                            <label>वधू का नाम (हिंदी):</label>
+                            <input type="text" id="f-bride-hi">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>वधू के माता-पिता:</label>
+                            <input type="text" id="f-bride-parents">
+                        </div>
+                        <div class="form-group">
+                            <label>वधू का पता:</label>
+                            <input type="text" id="f-bride-addr">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photos & Ganesh Auto-Fit -->
+                <div class="card-box">
+                    <h3>2. फोटो एवं श्री गणेश (Auto-Fit Image Upload / GitHub Path)</h3>
+                    <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                        आप सीधे फोटो चुन सकते हैं (यह कार्ड में अपने आप फिट और एम्बेड हो जाएगी) या GitHub फाइल का नाम (`om.png`, `groom.jpg`, `bride.jpg`) रख सकते हैं:
+                    </p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>श्री गणेश फोटो (`om.png` या अपलोड):</label>
+                            <input type="text" id="f-om-src" value="om.png">
+                            <input type="file" id="file-om" accept="image/*" style="margin-top: 4px; font-size: 11.5px;">
+                        </div>
+                        <div class="form-group">
+                            <label>दूल्हे की फोटो (`groom.jpg` या अपलोड):</label>
+                            <input type="text" id="f-groom-src" value="groom.jpg">
+                            <input type="file" id="file-groom" accept="image/*" style="margin-top: 4px; font-size: 11.5px;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>दुल्हन की फोटो (`bride.jpg` या अपलोड):</label>
+                            <input type="text" id="f-bride-src" value="bride.jpg">
+                            <input type="file" id="file-bride" accept="image/*" style="margin-top: 4px; font-size: 11.5px;">
+                        </div>
+                        <div class="img-preview-row">
+                            <div class="thumb-box"><img id="prev-om" src="om.png" alt="Om"><span>Ganesh</span></div>
+                            <div class="thumb-box"><img id="prev-groom" src="groom.jpg" alt="Groom"><span>Groom</span></div>
+                            <div class="thumb-box"><img id="prev-bride" src="bride.jpg" alt="Bride"><span>Bride</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Events List -->
+                <div class="card-box">
+                    <h3>3. मांगलिक कार्यक्रम एवं विवाह स्थल (Events & Venue)</h3>
+                    <div id="events-editor-list"></div>
+                    <button type="button" class="btn btn-gold" id="add-event-btn" style="font-size: 12px;">➕ नया कार्यक्रम जोड़ें</button>
+
+                    <div class="form-row" style="margin-top: 12px;">
+                        <div class="form-group">
+                            <label>विवाह स्थल (Venue):</label>
+                            <input type="text" id="f-venue">
+                        </div>
+                        <div class="form-group">
+                            <label>शुभ विवाह तारीख (Timer Date YYYY-MM-DD):</label>
+                            <input type="date" id="f-wedding-date">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Darshan Abhilashi, Vinit, Contact & Firm Details -->
+                <div class="card-box">
+                    <h3>4. दर्शनाभिलाषी, विनीत एवं प्रतिष्ठान (Business Promotion)</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>दर्शनाभिलाषी (Darshan Abhilashi):</label>
+                            <input type="text" id="f-darshan">
+                        </div>
+                        <div class="form-group">
+                            <label>विनीत (Vinit):</label>
+                            <input type="text" id="f-vinit">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>संपर्क मोबाइल नंबर (Call):</label>
+                            <input type="text" id="f-phone">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp नंबर (91 के साथ):</label>
+                            <input type="text" id="f-whatsapp">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>प्रतिष्ठान / फर्म का नाम (Firm Name for Promotion):</label>
+                            <input type="text" id="f-firm-name">
+                        </div>
+                        <div class="form-group">
+                            <label>प्रतिष्ठान का पता एवं सेवाएं:</label>
+                            <input type="text" id="f-firm-details">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="card-box" style="text-align: center; background: #fff0f6;">
+                    <button type="button" class="btn" id="save-record-btn" style="padding: 11px 22px; font-size: 14px;">💾 रिकॉर्ड सेव / अपडेट करें</button>
+                    <button type="button" class="btn btn-green" id="download-html-btn" style="padding: 11px 22px; font-size: 14px;">🚀 1-Click Ready-to-Host index.html डाउनलोड करें</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+(function () {
+    const PASS_KEY = "Abhi" + "@2026";
+    const STORAGE_KEY = "wedding_studio_records_v1";
+    let failedAttempts = 0;
+
+    // Default Record for Abhishek & Vasundhara
+    const defaultRecord = {
+        id: "rec_abhishek_vasundhara_2026",
+        groomEn: "Abhishek Kumar Sah",
+        groomHi: "(चि. अभिषेक कुमार साह)",
+        groomParents: "श्री सोनालाल साह एवं श्रीमती उमरावती देवी",
+        groomAddr: "मौजे, वार्ड नं. 13, माई स्थान रोड, रक्सौल, पूर्वी चंपारण, बिहार - 845305",
+        brideEn: "Miss Vasundhara Kumari",
+        brideHi: "(आयु. वसुंधरा कुमारी)",
+        brideParents: "श्री बिभारंजन प्रसाद एवं श्रीमती पूनम देवी",
+        brideAddr: "वार्ड नं. 04, बलथर, पश्चिम चंपारण, बिहार - 845307",
+        omSrc: "om.png",
+        groomSrc: "groom.jpg",
+        brideSrc: "bride.jpg",
+        venue: "राम जानकी मंदिर, रक्सौल (Ramjanki Mandir, Raxaul)",
+        weddingDate: "2026-12-02",
+        darshan: "समस्त साह परिवार एवं इष्टमित्रगण",
+        vinit: "श्री सोनालाल साह एवं श्रीमती उमरावती देवी",
+        phone: "9693539197",
+        whatsapp: "918092912107",
+        firmName: "Abhishek Digital Workshop & Telecom",
+        firmDetails: "मौजे, वार्ड नं. 13, माई स्थान रोड, रक्सौल - 845305 | Mob: 9693539197",
+        events: [
+            { title: "🚩 हनुमान आराधना", date: "मंगलवार, 01 दिसंबर 2026" },
+            { title: "📖 कथा एवं मटकोर", date: "मंगलवार, 01 दिसंबर 2026" },
+            { title: "🍽️ प्रीति भोज", date: "मंगलवार, 01 दिसंबर 2026" },
+            { title: "💍 शुभ विवाह एवं रिसेप्शन", date: "बुधवार, 02 दिसंबर 2026" }
+        ]
+    };
+
+    // Load DB from localStorage
+    function getRecords() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify([defaultRecord]));
+                return [defaultRecord];
+            }
+            return JSON.parse(raw);
+        } catch (e) {
+            return [defaultRecord];
+        }
+    }
+
+    function saveRecordsList(list) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        renderSidebarRecords();
+    }
+
+    // Login Handler with Lockout Protection
+    const loginScreen = document.getElementById("login-screen");
+    const studioApp = document.getElementById("studio-app");
+    const loginPass = document.getElementById("login-pass");
+    const loginErr = document.getElementById("login-err");
+
+    function checkLogin() {
+        if (failedAttempts >= 5) {
+            loginErr.style.display = "block";
+            loginErr.textContent = "⏳ बहुत सारे गलत प्रयास! कृपया पेज रिफ्रेश करें।";
+            return;
+        }
+        if (loginPass.value.trim() === PASS_KEY) {
+            loginScreen.style.display = "none";
+            studioApp.style.display = "block";
+            sessionStorage.setItem("studio_auth", "1");
+            initStudio();
+        } else {
+            failedAttempts++;
+            loginErr.style.display = "block";
+            loginErr.textContent = "❌ गलत पासवर्ड! (" + failedAttempts + "/5)";
+        }
+    }
+
+    document.getElementById("login-btn").addEventListener("click", checkLogin);
+    loginPass.addEventListener("keydown", e => { if (e.key === "Enter") checkLogin(); });
+    document.getElementById("logout-btn").addEventListener("click", () => {
+        sessionStorage.removeItem("studio_auth");
+        location.reload();
+    });
+
+    if (sessionStorage.getItem("studio_auth") === "1") {
+        loginScreen.style.display = "none";
+        studioApp.style.display = "block";
+        initStudio();
+    }
+
+    // Studio Initialization
+    function initStudio() {
+        renderSidebarRecords();
+        const records = getRecords();
+        if (records.length > 0) loadRecordIntoForm(records[0]);
+    }
+
+    function renderSidebarRecords() {
+        const listEl = document.getElementById("records-list");
+        const records = getRecords();
+        listEl.innerHTML = "";
+        records.forEach(rec => {
+            const div = document.createElement("div");
+            div.className = "record-item";
+            div.innerHTML = `
+                <strong>${rec.groomEn} ❤️ ${rec.brideEn}</strong>
+                <span style="font-size:11.5px; color:#666;">📅 ${rec.weddingDate}</span>
+                <div style="margin-top:6px;">
+                    <button type="button" class="btn" style="padding:4px 10px; font-size:11px;" data-load="${rec.id}">✏️ Edit</button>
+                    <button type="button" class="btn btn-red" style="padding:4px 10px; font-size:11px;" data-del="${rec.id}">🗑️ Delete</button>
+                </div>
+            `;
+            listEl.appendChild(div);
+        });
+
+        listEl.querySelectorAll("[data-load]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const found = getRecords().find(r => r.id === btn.dataset.load);
+                if (found) loadRecordIntoForm(found);
+            });
+        });
+
+        listEl.querySelectorAll("[data-del]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                if (!confirm("क्या आप इस रिकॉर्ड को डिलीट करना चाहते हैं?")) return;
+                const filtered = getRecords().filter(r => r.id !== btn.dataset.del);
+                saveRecordsList(filtered);
+            });
+        });
+    }
+
+    function renderEventsEditor(events) {
+        const container = document.getElementById("events-editor-list");
+        container.innerHTML = "";
+        events.forEach((ev, idx) => {
+            const row = document.createElement("div");
+            row.className = "event-row";
+            row.innerHTML = `
+                <input type="text" class="ev-title-in" value="${ev.title}" placeholder="कार्यक्रम का नाम">
+                <input type="text" class="ev-date-in" value="${ev.date}" placeholder="तारीख एवं दिन">
+                <button type="button" class="btn btn-red ev-remove-btn" style="padding:6px 10px;">✕</button>
+            `;
+            row.querySelector(".ev-remove-btn").addEventListener("click", () => row.remove());
+            container.appendChild(row);
+        });
+    }
+
+    document.getElementById("add-event-btn").addEventListener("click", () => {
+        const container = document.getElementById("events-editor-list");
+        const row = document.createElement("div");
+        row.className = "event-row";
+        row.innerHTML = `
+            <input type="text" class="ev-title-in" placeholder="कार्यक्रम का नाम (जैसे: हल्दी कलश)">
+            <input type="text" class="ev-date-in" placeholder="तारीख (जैसे: 01 दिसंबर 2026)">
+            <button type="button" class="btn btn-red ev-remove-btn" style="padding:6px 10px;">✕</button>
+        `;
+        row.querySelector(".ev-remove-btn").addEventListener("click", () => row.remove());
+        container.appendChild(row);
+    });
+
+    function loadRecordIntoForm(rec) {
+        document.getElementById("record-id").value = rec.id;
+        document.getElementById("f-groom-en").value = rec.groomEn;
+        document.getElementById("f-groom-hi").value = rec.groomHi;
+        document.getElementById("f-groom-parents").value = rec.groomParents;
+        document.getElementById("f-groom-addr").value = rec.groomAddr;
+        document.getElementById("f-bride-en").value = rec.brideEn;
+        document.getElementById("f-bride-hi").value = rec.brideHi;
+        document.getElementById("f-bride-parents").value = rec.brideParents;
+        document.getElementById("f-bride-addr").value = rec.brideAddr;
+        document.getElementById("f-om-src").value = rec.omSrc;
+        document.getElementById("f-groom-src").value = rec.groomSrc;
+        document.getElementById("f-bride-src").value = rec.brideSrc;
+        document.getElementById("prev-om").src = rec.omSrc;
+        document.getElementById("prev-groom").src = rec.groomSrc;
+        document.getElementById("prev-bride").src = rec.brideSrc;
+        document.getElementById("f-venue").value = rec.venue;
+        document.getElementById("f-wedding-date").value = rec.weddingDate;
+        document.getElementById("f-darshan").value = rec.darshan;
+        document.getElementById("f-vinit").value = rec.vinit;
+        document.getElementById("f-phone").value = rec.phone;
+        document.getElementById("f-whatsapp").value = rec.whatsapp;
+        document.getElementById("f-firm-name").value = rec.firmName;
+        document.getElementById("f-firm-details").value = rec.firmDetails;
+        renderEventsEditor(rec.events || []);
+    }
+
+    // Smart Auto-Fit Image Resizer (Converts uploaded photo to lightweight auto-fitted Base64)
+    function setupAutoFitUpload(fileInputId, textInputId, previewImgId) {
+        document.getElementById(fileInputId).addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement("canvas");
+                    const size = 360;
+                    canvas.width = size;
+                    canvas.height = size;
+                    const c = canvas.getContext("2d");
+                    c.fillStyle = "#ffffff";
+                    c.fillRect(0, 0, size, size);
+                    const ratio = Math.max(size / img.width, size / img.height);
+                    const nw = img.width * ratio;
+                    const nh = img.height * ratio;
+                    c.drawImage(img, (size - nw) / 2, (size - nh) / 2, nw, nh);
+                    const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+                    document.getElementById(textInputId).value = dataUrl;
+                    document.getElementById(previewImgId).src = dataUrl;
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+    setupAutoFitUpload("file-om", "f-om-src", "prev-om");
+    setupAutoFitUpload("file-groom", "f-groom-src", "prev-groom");
+    setupAutoFitUpload("file-bride", "f-bride-src", "prev-bride");
+
+    function collectFormData() {
+        const events = [];
+        document.querySelectorAll("#events-editor-list .event-row").forEach(r => {
+            const t = r.querySelector(".ev-title-in").value.trim();
+            const d = r.querySelector(".ev-date-in").value.trim();
+            if (t) events.push({ title: t, date: d });
+        });
+
+        return {
+            id: document.getElementById("record-id").value || ("rec_" + Date.now()),
+            groomEn: document.getElementById("f-groom-en").value.trim(),
+            groomHi: document.getElementById("f-groom-hi").value.trim(),
+            groomParents: document.getElementById("f-groom-parents").value.trim(),
+            groomAddr: document.getElementById("f-groom-addr").value.trim(),
+            brideEn: document.getElementById("f-bride-en").value.trim(),
+            brideHi: document.getElementById("f-bride-hi").value.trim(),
+            brideParents: document.getElementById("f-bride-parents").value.trim(),
+            brideAddr: document.getElementById("f-bride-addr").value.trim(),
+            omSrc: document.getElementById("f-om-src").value.trim() || "om.png",
+            groomSrc: document.getElementById("f-groom-src").value.trim() || "groom.jpg",
+            brideSrc: document.getElementById("f-bride-src").value.trim() || "bride.jpg",
+            venue: document.getElementById("f-venue").value.trim(),
+            weddingDate: document.getElementById("f-wedding-date").value || "2026-12-02",
+            darshan: document.getElementById("f-darshan").value.trim(),
+            vinit: document.getElementById("f-vinit").value.trim(),
+            phone: document.getElementById("f-phone").value.trim(),
+            whatsapp: document.getElementById("f-whatsapp").value.trim(),
+            firmName: document.getElementById("f-firm-name").value.trim(),
+            firmDetails: document.getElementById("f-firm-details").value.trim(),
+            events: events
+        };
+    }
+
+    // Save / Update Record
+    document.getElementById("save-record-btn").addEventListener("click", () => {
+        const data = collectFormData();
+        const list = getRecords();
+        const idx = list.findIndex(r => r.id === data.id);
+        if (idx >= 0) list[idx] = data;
+        else list.unshift(data);
+        saveRecordsList(list);
+        alert("✅ रिकॉर्ड सफलतापूर्वक सेव/अपडेट हो गया!");
+    });
+
+    // New Blank Record
+    document.getElementById("new-record-btn").addEventListener("click", () => {
+        const copy = JSON.parse(JSON.stringify(defaultRecord));
+        copy.id = "rec_" + Date.now();
+        copy.groomEn = "New Groom Name";
+        copy.brideEn = "New Bride Name";
+        loadRecordIntoForm(copy);
+    });
+
+    // Export Database Backup JSON
+    document.getElementById("export-db-btn").addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(getRecords(), null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "wedding_studio_backup.json";
+        a.click();
+    });
+
+    // 1-CLICK READY-TO-HOST WEBPAGE GENERATOR (With Escaped <\/script> so it NEVER breaks!)
+    document.getElementById("download-html-btn").addEventListener("click", () => {
+        const d = collectFormData();
+        const eventsHtml = d.events.map(ev =>
+            `<div class="event-card seq-step"><div class="event-name">${ev.title}</div><div class="event-date">📅 ${ev.date}</div></div>`
+        ).join("\n");
+
+        const htmlContent = `<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>शुभ विवाह - ${d.groomEn} ❤️ ${d.brideEn}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --pink-royal:#7b003a; --pink-deep:#9c0d4b; --pink-bright:#ad1457; --gold:#d4af37; --gold-light:#ffeb99; --gold-dark:#8c6200; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; min-height:100%; background:radial-gradient(circle at center, #6a0032 0%, #380018 60%, #1f000d 100%); color:#2c0014; font-family:'Noto Sans Devanagari','Poppins',sans-serif; font-size:14px; text-align:center; overflow-x:hidden; }
+body.locked { overflow:hidden; height:100vh; }
+button { cursor:pointer; font-family:inherit; }
+#doors-screen { position:fixed; inset:0; width:100%; height:100%; z-index:9999; display:flex; perspective:1600px; }
+.door { width:50%; height:100%; background:linear-gradient(135deg, #9c0d4b 0%, #6a0032 55%, #2a0015 100%); border:5px solid var(--gold); transition:transform 2.2s ease; }
+.door-left { transform-origin:left center; } .door-right { transform-origin:right center; }
+#doors-screen.open .door-left { transform:rotateY(-110deg); } #doors-screen.open .door-right { transform:rotateY(110deg); }
+#door-center-box { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10001; width:88%; max-width:340px; background:#5a002c; border:2.5px solid var(--gold-light); border-radius:22px; padding:22px 16px; color:#fff; }
+#open-btn { background:linear-gradient(45deg, #d4af37, #fff6b5); color:#3b001b; border:2px solid #fff; border-radius:50px; padding:10px 26px; font-size:16px; font-weight:700; margin-top:10px; }
+#main-content { max-width:600px; margin:0 auto; padding:14px 10px 45px 10px; }
+.royal-page-card { background:radial-gradient(circle at top, #ffffff 0%, #fff4f8 70%, #ffe9f2 100%); border:3px solid var(--gold); border-radius:20px; padding:20px 14px; margin-bottom:16px; }
+.seq-step { opacity:0; transform:translateY(16px); transition:all 0.6s ease; } .seq-step.show { opacity:1; transform:translateY(0); }
+.ganesh-auto-box { width:5cm; height:5cm; max-width:135px; max-height:135px; margin:8px auto; border-radius:50%; border:3px solid var(--gold); overflow:hidden; background:#fff; display:flex; align-items:center; justify-content:center; padding:4px; }
+.om-image { width:100%; height:100%; border-radius:50%; object-fit:contain; }
+.mantra-box { background:#ffeef4; border:1px solid var(--gold); border-left:4px solid var(--pink-bright); border-right:4px solid var(--pink-bright); padding:9px; margin:8px auto; border-radius:10px; font-size:13px; color:var(--pink-royal); font-weight:600; }
+.profile-img-box { width:115px; height:115px; margin:8px auto; border-radius:50%; border:3px solid var(--gold); overflow:hidden; }
+.profile-img { width:100%; height:100%; object-fit:cover; }
+.detail-pill { background:#fff; border:1px solid var(--gold); border-radius:10px; padding:9px; margin:7px auto; font-size:13px; }
+.event-card { background:#fff; border:1px solid var(--gold); border-left:4px solid var(--pink-bright); border-radius:10px; padding:10px; margin:8px auto; text-align:left; }
+.event-name { font-size:14px; color:var(--pink-royal); font-weight:700; }
+.event-date { font-size:12.5px; color:#5d2a42; }
+.timer-container { display:flex; justify-content:center; gap:8px; margin:10px 0; }
+.time-box { background:var(--pink-royal); color:#fff; border:1.5px solid var(--gold); padding:8px; border-radius:10px; min-width:58px; }
+.time-box span { display:block; font-size:18px; font-weight:700; color:var(--gold-light); }
+.btn-call { display:inline-block; background:var(--pink-bright); color:#fff; text-decoration:none; padding:8px 16px; border-radius:30px; font-size:13px; font-weight:600; margin:4px; }
+.btn-whatsapp { display:inline-block; background:#128C7E; color:#fff; text-decoration:none; padding:8px 16px; border-radius:30px; font-size:13px; font-weight:600; margin:4px; }
+</style>
+</head>
+<body class="locked">
+<div id="doors-screen">
+    <div class="door door-left"></div><div class="door door-right"></div>
+    <div id="door-center-box">
+        <h2 style="color:var(--gold-light); font-size:22px;">॥ शुभ विवाह ॥</h2>
+        <p style="margin:6px 0;">${d.groomEn} & ${d.brideEn}</p>
+        <button id="open-btn" type="button">🚪 निमंत्रण खोलें</button>
+    </div>
+</div>
+<main id="main-content">
+    <section class="royal-page-card">
+        <div id="guest-greeting" class="seq-step" style="background:var(--pink-royal); color:#fff; padding:10px; border-radius:12px; margin-bottom:10px;">
+            <div style="font-size:12px; color:var(--gold-light);">✨ सप्रेम सादर आमंत्रण ✨</div>
+            <strong id="guest-name-display" style="font-size:18px;">माननीय अतिथि महोदय</strong>
+        </div>
+        <div class="ganesh-auto-box seq-step"><img src="${d.omSrc}" class="om-image" alt="Ganesh"></div>
+        <div class="seq-step" style="font-weight:700; color:var(--pink-royal); margin:6px 0;">॥ श्री गणेशाय नमः ॥</div>
+        <div class="mantra-box seq-step">॥ वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ । निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</div>
+        <div class="mantra-box seq-step">॥ मंगलम भगवान विष्णुः मंगलम गरुड़ध्वजः । मंगलम पुण्डरीकाक्षः मंगलाय तनो हरिः ॥</div>
+    </section>
+    <section class="royal-page-card">
+        <h3 style="color:var(--pink-royal);">🤵 वर (The Groom)</h3>
+        <div class="profile-img-box"><img src="${d.groomSrc}" class="profile-img" alt="Groom"></div>
+        <div style="font-size:18px; font-weight:700; color:var(--pink-royal);">${d.groomEn}</div>
+        <div style="font-size:14px; color:var(--gold-dark);">${d.groomHi}</div>
+        <div class="detail-pill"><strong>सुपुत्र:</strong> ${d.groomParents}</div>
+        <div class="detail-pill"><strong>पता:</strong> ${d.groomAddr}</div>
+    </section>
+    <section class="royal-page-card">
+        <h3 style="color:var(--pink-royal);">👰 वधू (The Bride)</h3>
+        <div class="profile-img-box"><img src="${d.brideSrc}" class="profile-img" alt="Bride"></div>
+        <div style="font-size:18px; font-weight:700; color:var(--pink-royal);">${d.brideEn}</div>
+        <div style="font-size:14px; color:var(--gold-dark);">${d.brideHi}</div>
+        <div class="detail-pill"><strong>सुपुत्री:</strong> ${d.brideParents}</div>
+        <div class="detail-pill"><strong>पता:</strong> ${d.brideAddr}</div>
+    </section>
+    <section class="royal-page-card">
+        <h3 style="color:var(--pink-royal); margin-bottom:8px;">🌸 मांगलिक कार्यक्रम 🌸</h3>
+        ${eventsHtml}
+        <div class="detail-pill"><strong>📍 विवाह स्थल:</strong> ${d.venue}</div>
+    </section>
+    <section class="royal-page-card">
+        <h3 style="color:var(--pink-royal);">⏳ शुभ विवाह में शेष समय</h3>
+        <div class="timer-container">
+            <div class="time-box"><span id="days">00</span>दिन</div>
+            <div class="time-box"><span id="hours">00</span>घंटे</div>
+            <div class="time-box"><span id="minutes">00</span>मिनट</div>
+            <div class="time-box"><span id="seconds">00</span>सेकंड</div>
+        </div>
+        <div class="detail-pill"><strong>🙏 दर्शनाभिलाषी:</strong> ${d.darshan}<br><strong>🌷 विनीत:</strong> ${d.vinit}</div>
+        <a href="tel:+91${d.phone}" class="btn-call">📞 कॉल: ${d.phone}</a>
+        <a href="https://wa.me/${d.whatsapp}" target="_blank" class="btn-whatsapp">💬 WhatsApp</a>
+        <div class="detail-pill" style="background:#fffdf2; border-style:dashed;">
+            <strong style="color:var(--pink-royal);">🏢 ${d.firmName}</strong><br>${d.firmDetails}
+        </div>
+    </section>
+</main>
+<script>
+(function(){
+    const raw = new URLSearchParams(window.location.search).get("guest");
+    if(raw) document.getElementById("guest-name-display").textContent = "प्रिय " + decodeURIComponent(raw) + " जी";
+    document.getElementById("open-btn").addEventListener("click", function(){
+        document.body.classList.remove("locked");
+        document.getElementById("doors-screen").classList.add("open");
+        document.getElementById("door-center-box").style.opacity = "0";
+        document.querySelectorAll(".seq-step").forEach((s, i) => setTimeout(() => s.classList.add("show"), 300 + i * 350));
+        setTimeout(() => document.getElementById("doors-screen").style.display = "none", 2200);
+    });
+    const tDate = new Date("${d.weddingDate}T00:00:00").getTime();
+    setInterval(() => {
+        const diff = tDate - Date.now();
+        if(diff <= 0) return;
+        document.getElementById("days").textContent = Math.floor(diff / 86400000);
+        document.getElementById("hours").textContent = Math.floor((diff / 3600000) % 24);
+        document.getElementById("minutes").textContent = Math.floor((diff / 60000) % 60);
+        document.getElementById("seconds").textContent = Math.floor((diff / 1000) % 60);
+    }, 1000);
+})();
+<\/script>
+</body>
+</html>`;
+
+        const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "index.html";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+})();
+</script>
+</body>
+</html>
