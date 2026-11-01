@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Wedding Card Studio - Admin CMS</title>
+<title>Digital Wedding Card Studio - Admin Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -21,14 +21,14 @@ body {
     font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-size: 14px;
-    padding: 16px;
+    font-size: 13.5px;
+    padding: 14px;
 }
 
-/* Login Screen */
+/* Master Admin Login Screen */
 #login-screen {
     max-width: 380px;
-    margin: 70px auto;
+    margin: 60px auto;
     background: #fff;
     padding: 26px 20px;
     border-radius: 18px;
@@ -37,17 +37,17 @@ body {
     text-align: center;
 }
 
-/* Studio Container */
+/* Studio Workspace */
 #studio-app {
     display: none;
-    max-width: 960px;
+    max-width: 1040px;
     margin: 0 auto;
 }
 
 .studio-header {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: #fff;
-    padding: 18px 20px;
+    padding: 16px 20px;
     border-radius: 16px;
     border: 2px solid var(--gold);
     display: flex;
@@ -55,13 +55,13 @@ body {
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 .grid-layout {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 18px;
+    grid-template-columns: 310px 1fr;
+    gap: 16px;
 }
 
 .card-box {
@@ -75,7 +75,7 @@ body {
 
 .card-box h3 {
     color: var(--primary);
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 12px;
     border-bottom: 1px dashed var(--gold);
     padding-bottom: 6px;
@@ -84,17 +84,17 @@ body {
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
 }
 
 .form-group {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     text-align: left;
 }
 
 label {
     display: block;
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--primary);
     margin-bottom: 4px;
@@ -102,10 +102,10 @@ label {
 
 input, textarea {
     width: 100%;
-    padding: 9px 11px;
+    padding: 8px 10px;
     border: 1.5px solid #ddd;
     border-radius: 8px;
-    font-size: 13.5px;
+    font-size: 13px;
     font-family: inherit;
     outline: none;
 }
@@ -118,9 +118,9 @@ input:focus, textarea:focus {
     background: linear-gradient(45deg, var(--primary), var(--secondary));
     color: #fff;
     border: none;
-    padding: 9px 16px;
+    padding: 8px 15px;
     border-radius: 25px;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 600;
     cursor: pointer;
     display: inline-block;
@@ -130,8 +130,8 @@ input:focus, textarea:focus {
 .btn-green { background: linear-gradient(45deg, #1ebe5d, #128C7E); }
 .btn-gold { background: linear-gradient(45deg, #b8860b, #8c6200); }
 .btn-red { background: #c62828; }
+.btn-blue { background: #1565c0; }
 
-/* Saved Records List */
 .record-item {
     background: #fff9fb;
     border: 1px solid var(--gold);
@@ -143,11 +143,10 @@ input:focus, textarea:focus {
 
 .record-item strong {
     display: block;
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--primary);
 }
 
-/* Event Row */
 .event-row {
     display: grid;
     grid-template-columns: 1fr 1fr auto;
@@ -156,28 +155,37 @@ input:focus, textarea:focus {
     align-items: center;
 }
 
-/* Auto-fit Preview Thumbnails */
 .img-preview-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .thumb-box {
     text-align: center;
-    font-size: 11.5px;
+    font-size: 11px;
 }
 
 .thumb-box img {
-    width: 64px;
-    height: 64px;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: contain;
     border: 2px solid var(--gold);
     display: block;
-    margin: 0 auto 4px auto;
-    background: #fff0f5;
+    margin: 0 auto 3px auto;
+    background: #fff;
+}
+
+.status-badge {
+    display: block;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-top: 8px;
+    word-break: break-word;
 }
 
 @media (max-width: 768px) {
@@ -189,25 +197,25 @@ input:focus, textarea:focus {
 </head>
 <body>
 
-    <!-- 1. HACKPROOF PASSWORD LOGIN (No User ID required) -->
+    <!-- 1. MASTER STUDIO ADMIN LOGIN -->
     <div id="login-screen">
-        <div style="font-size: 36px; margin-bottom: 6px;">🔐</div>
-        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 6px;">Wedding Card Studio</h2>
-        <p style="font-size: 12.5px; color: #666; margin-bottom: 16px;">सुरक्षित स्टूडियो में प्रवेश के लिए केवल एडमिन पासवर्ड दर्ज करें</p>
+        <div style="font-size: 34px; margin-bottom: 6px;">🔒</div>
+        <h2 style="color: var(--primary); font-size: 19px; margin-bottom: 6px;">Studio Admin Login</h2>
+        <p style="font-size: 12px; color: #666; margin-bottom: 16px;">सुरक्षित प्रवेश के लिए एडमिन पासवर्ड दर्ज करें</p>
         <div class="form-group">
-            <label>एडमिन पासवर्ड (Admin Password):</label>
-            <input type="password" id="login-pass" placeholder="Enter Password">
+            <label>पासवर्ड (Password):</label>
+            <input type="password" id="login-pass" placeholder="Abhi@2026">
         </div>
-        <button type="button" class="btn" id="login-btn" style="width: 100%; padding: 11px;">Studio Unlock करें</button>
-        <p id="login-err" style="color: #c62828; font-size: 12.5px; margin-top: 8px; display: none; font-weight: 600;"></p>
+        <button type="button" class="btn" id="login-btn" style="width: 100%; padding: 10px;">लॉगिन करें</button>
+        <p id="login-err" style="color: #c62828; font-size: 12px; margin-top: 8px; display: none; font-weight: 600;">❌ गलत पासवर्ड!</p>
     </div>
 
-    <!-- 2. MAIN STUDIO WORKSPACE -->
+    <!-- 2. MAIN STUDIO DASHBOARD -->
     <div id="studio-app">
         <div class="studio-header">
             <div>
-                <h2 style="font-size: 19px;">🎨 Digital Wedding Card Studio</h2>
-                <p style="font-size: 12px; color: #ffe57f;">Create, Save, Update, Delete & Export 1-Click Ready-to-Host Webpage</p>
+                <h2 style="font-size: 18px;">🎨 Digital Wedding Card Studio (Cloud Connected)</h2>
+                <p style="font-size: 11.5px; color: #ffe57f;">Client Username/Password Setup + Google Sheet & Drive Auto-Backup</p>
             </div>
             <div>
                 <button type="button" class="btn btn-gold" id="new-record-btn">➕ नया कार्ड</button>
@@ -216,21 +224,51 @@ input:focus, textarea:focus {
         </div>
 
         <div class="grid-layout">
-            <!-- LEFT SIDEBAR: SAVED RECORDS DATABASE (CRUD) -->
+            <!-- LEFT SIDEBAR: PRE-CONFIGURED CLOUD SYNC & SAVED RECORDS -->
             <div>
+                <div class="card-box" style="background: #fffdf5;">
+                    <h3>☁️ Google Sheet & Drive Sync</h3>
+                    <div class="form-group">
+                        <label>Connected Google Apps Script URL:</label>
+                        <input type="text" id="gas-url-input" value="https://script.google.com/macros/s/AKfycbw1bGOvvH2i30w-IuviZ-Yzxn5WLZBBZyTII5-nUMazvJtcx7Rx9X14CSV87NJSqP54/exec">
+                    </div>
+                    <button type="button" class="btn btn-blue" id="test-cloud-btn" style="width: 100%; margin: 2px 0;">🔍 Test Cloud Connection</button>
+                    <button type="button" class="btn btn-green" id="sync-from-cloud-btn" style="width: 100%; margin: 4px 0;">🔄 Google Sheet से रिकॉर्ड लोड करें</button>
+                    <button type="button" class="btn btn-gold" id="reset-gas-url-btn" style="width: 100%; margin: 2px 0; font-size: 11px;">♻️ Default URL रिस्टोर करें</button>
+                    <div id="cloud-status" class="status-badge" style="background: #e8f5e9; color: #1b5e20;">✅ Default Google Script URL Active</div>
+                </div>
+
                 <div class="card-box">
-                    <h3>📂 सेव किए गए कार्ड (Saved Records)</h3>
+                    <h3>📂 सेव किए गए कार्ड (Records)</h3>
                     <div id="records-list"></div>
-                    <hr style="margin: 12px 0; border: none; border-top: 1px dashed var(--gold);">
-                    <button type="button" class="btn btn-gold" id="export-db-btn" style="width: 100%; font-size: 12px;">⬇️ Backup JSON डाउनलोड</button>
+                    <hr style="margin: 10px 0; border: none; border-top: 1px dashed var(--gold);">
+                    <button type="button" class="btn btn-gold" id="export-db-btn" style="width: 100%; font-size: 11.5px;">⬇️ Local JSON Backup</button>
                 </div>
             </div>
 
-            <!-- RIGHT EDITOR: COMPLETE WEDDING FORM -->
+            <!-- RIGHT MAIN FORM -->
             <div>
-                <!-- Groom & Bride -->
+                <!-- SECTION 1: CLIENT USERNAME & PASSWORD FOR INDEX.HTML -->
+                <div class="card-box" style="background: #fff0f6; border-color: var(--secondary);">
+                    <h3>🔑 1. क्लाइंट लॉगिन सेटिंग (For Generated index.html)</h3>
+                    <p style="font-size: 12px; color: #555; margin-bottom: 10px;">
+                        यहाँ जो Username और Password आप सेट करेंगे, वही तैयार होने वाले `index.html` में लॉगिन करने पर काम करेगा ताकि क्लाइंट खुद अपने मेहमानों के नाम से कार्ड शेयर कर सके:
+                    </p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>क्लाइंट यूजरनेम (Client Username):</label>
+                            <input type="text" id="f-client-user" placeholder="जैसे: abhishek">
+                        </div>
+                        <div class="form-group">
+                            <label>क्लाइंट पासवर्ड (Client Password):</label>
+                            <input type="text" id="f-client-pass" placeholder="जैसे: Abhi@2026">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: GROOM & BRIDE DETAILS -->
                 <div class="card-box">
-                    <h3>1. वर एवं वधू का विवरण (Groom & Bride Details)</h3>
+                    <h3>🤵👰 2. वर एवं वधू का विवरण (Couple Details)</h3>
                     <input type="hidden" id="record-id">
                     <div class="form-row">
                         <div class="form-group">
@@ -252,7 +290,7 @@ input:focus, textarea:focus {
                             <input type="text" id="f-groom-addr">
                         </div>
                     </div>
-                    <hr style="margin: 10px 0; border: none; border-top: 1px dashed #eee;">
+                    <hr style="margin: 8px 0; border: none; border-top: 1px dashed #eee;">
                     <div class="form-row">
                         <div class="form-group">
                             <label>वधू का नाम (English):</label>
@@ -275,29 +313,26 @@ input:focus, textarea:focus {
                     </div>
                 </div>
 
-                <!-- Photos & Ganesh Auto-Fit -->
+                <!-- SECTION 3: AUTO-FIT PHOTOS & GANESH PNG -->
                 <div class="card-box">
-                    <h3>2. फोटो एवं श्री गणेश (Auto-Fit Image Upload / GitHub Path)</h3>
-                    <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
-                        आप सीधे फोटो चुन सकते हैं (यह कार्ड में अपने आप फिट और एम्बेड हो जाएगी) या GitHub फाइल का नाम (`om.png`, `groom.jpg`, `bride.jpg`) रख सकते हैं:
-                    </p>
+                    <h3>🖼️ 3. फोटो एवं श्री गणेश (Auto-Fit Image Upload)</h3>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>श्री गणेश फोटो (`om.png` या अपलोड):</label>
+                            <label>श्री गणेश फोटो (`om.png` या फाइल चुनें):</label>
                             <input type="text" id="f-om-src" value="om.png">
-                            <input type="file" id="file-om" accept="image/*" style="margin-top: 4px; font-size: 11.5px;">
+                            <input type="file" id="file-om" accept="image/*" style="margin-top: 4px; font-size: 11px;">
                         </div>
                         <div class="form-group">
-                            <label>दूल्हे की फोटो (`groom.jpg` या अपलोड):</label>
+                            <label>वर की फोटो (`groom.jpg` या फाइल चुनें):</label>
                             <input type="text" id="f-groom-src" value="groom.jpg">
-                            <input type="file" id="file-groom" accept="image/*" style="margin-top: 4px; font-size: 11.5px;">
+                            <input type="file" id="file-groom" accept="image/*" style="margin-top: 4px; font-size: 11px;">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>दुल्हन की फोटो (`bride.jpg` या अपलोड):</label>
+                            <label>वधू की फोटो (`bride.jpg` या फाइल चुनें):</label>
                             <input type="text" id="f-bride-src" value="bride.jpg">
-                            <input type="file" id="file-bride" accept="image/*" style="margin-top: 4px; font-size: 11.5px;">
+                            <input type="file" id="file-bride" accept="image/*" style="margin-top: 4px; font-size: 11px;">
                         </div>
                         <div class="img-preview-row">
                             <div class="thumb-box"><img id="prev-om" src="om.png" alt="Om"><span>Ganesh</span></div>
@@ -307,40 +342,39 @@ input:focus, textarea:focus {
                     </div>
                 </div>
 
-                <!-- Dynamic Events List -->
+                <!-- SECTION 4: EVENTS & VENUE -->
                 <div class="card-box">
-                    <h3>3. मांगलिक कार्यक्रम एवं विवाह स्थल (Events & Venue)</h3>
+                    <h3>🌸 4. मांगलिक कार्यक्रम एवं विवाह स्थल</h3>
                     <div id="events-editor-list"></div>
-                    <button type="button" class="btn btn-gold" id="add-event-btn" style="font-size: 12px;">➕ नया कार्यक्रम जोड़ें</button>
-
-                    <div class="form-row" style="margin-top: 12px;">
+                    <button type="button" class="btn btn-gold" id="add-event-btn" style="font-size: 11.5px;">➕ नया कार्यक्रम जोड़ें</button>
+                    <div class="form-row" style="margin-top: 10px;">
                         <div class="form-group">
                             <label>विवाह स्थल (Venue):</label>
                             <input type="text" id="f-venue">
                         </div>
                         <div class="form-group">
-                            <label>शुभ विवाह तारीख (Timer Date YYYY-MM-DD):</label>
+                            <label>शुभ विवाह तारीख (Countdown Date):</label>
                             <input type="date" id="f-wedding-date">
                         </div>
                     </div>
                 </div>
 
-                <!-- Darshan Abhilashi, Vinit, Contact & Firm Details -->
+                <!-- SECTION 5: DARSHAN ABHILASHI, VINIT & BUSINESS PROMOTION -->
                 <div class="card-box">
-                    <h3>4. दर्शनाभिलाषी, विनीत एवं प्रतिष्ठान (Business Promotion)</h3>
+                    <h3>🙏 5. दर्शनाभिलाषी, विनीत एवं फर्म प्रमोशन</h3>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>दर्शनाभिलाषी (Darshan Abhilashi):</label>
+                            <label>दर्शनाभिलाषी:</label>
                             <input type="text" id="f-darshan">
                         </div>
                         <div class="form-group">
-                            <label>विनीत (Vinit):</label>
+                            <label>विनीत:</label>
                             <input type="text" id="f-vinit">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>संपर्क मोबाइल नंबर (Call):</label>
+                            <label>संपर्क नंबर (Call):</label>
                             <input type="text" id="f-phone">
                         </div>
                         <div class="form-group">
@@ -350,20 +384,24 @@ input:focus, textarea:focus {
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>प्रतिष्ठान / फर्म का नाम (Firm Name for Promotion):</label>
+                            <label>फर्म का नाम (Business Promotion):</label>
                             <input type="text" id="f-firm-name">
                         </div>
                         <div class="form-group">
-                            <label>प्रतिष्ठान का पता एवं सेवाएं:</label>
+                            <label>फर्म का पता एवं मोबाइल:</label>
                             <input type="text" id="f-firm-details">
                         </div>
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="card-box" style="text-align: center; background: #fff0f6;">
-                    <button type="button" class="btn" id="save-record-btn" style="padding: 11px 22px; font-size: 14px;">💾 रिकॉर्ड सेव / अपडेट करें</button>
-                    <button type="button" class="btn btn-green" id="download-html-btn" style="padding: 11px 22px; font-size: 14px;">🚀 1-Click Ready-to-Host index.html डाउनलोड करें</button>
+                <!-- ACTION BUTTONS -->
+                <div class="card-box" style="text-align: center; background: #fff9fb;">
+                    <button type="button" class="btn btn-blue" id="save-record-btn" style="padding: 10px 18px; font-size: 13.5px;">
+                        💾 Save Record (Local + Google Sheet)
+                    </button>
+                    <button type="button" class="btn btn-green" id="download-html-btn" style="padding: 10px 18px; font-size: 13.5px;">
+                        🚀 1-Click Download Ready-to-Host index.html (+ Save to Drive)
+                    </button>
                 </div>
             </div>
         </div>
@@ -371,13 +409,15 @@ input:focus, textarea:focus {
 
 <script>
 (function () {
-    const PASS_KEY = "Abhi" + "@2026";
-    const STORAGE_KEY = "wedding_studio_records_v1";
-    let failedAttempts = 0;
+    const MASTER_PASS = "Abhi" + "@2026";
+    const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbw1bGOvvH2i30w-IuviZ-Yzxn5WLZBBZyTII5-nUMazvJtcx7Rx9X14CSV87NJSqP54/exec";
+    const STORAGE_KEY = "wedding_studio_records_v3";
+    const GAS_URL_KEY = "wedding_studio_gas_url_v3";
 
-    // Default Record for Abhishek & Vasundhara
     const defaultRecord = {
         id: "rec_abhishek_vasundhara_2026",
+        clientUser: "abhishek",
+        clientPass: "Abhi@2026",
         groomEn: "Abhishek Kumar Sah",
         groomHi: "(चि. अभिषेक कुमार साह)",
         groomParents: "श्री सोनालाल साह एवं श्रीमती उमरावती देवी",
@@ -396,7 +436,7 @@ input:focus, textarea:focus {
         phone: "9693539197",
         whatsapp: "918092912107",
         firmName: "Abhishek Digital Workshop & Telecom",
-        firmDetails: "मौजे, वार्ड नं. 13, माई स्थान रोड, रक्सौल - 845305 | Mob: 9693539197",
+        firmDetails: "मौजे, वार्ड नं. 13, माई स्थान रोड, रक्सौल - 845305 | Mob: 9693539197, WhatsApp: 8092912107",
         events: [
             { title: "🚩 हनुमान आराधना", date: "मंगलवार, 01 दिसंबर 2026" },
             { title: "📖 कथा एवं मटकोर", date: "मंगलवार, 01 दिसंबर 2026" },
@@ -405,7 +445,24 @@ input:focus, textarea:focus {
         ]
     };
 
-    // Load DB from localStorage
+    const statusBadge = document.getElementById("cloud-status");
+    const gasInput = document.getElementById("gas-url-input");
+
+    function setStatus(msg, bg, color) {
+        statusBadge.textContent = msg;
+        statusBadge.style.background = bg || "#eee";
+        statusBadge.style.color = color || "#333";
+    }
+
+    function getActiveGasUrl() {
+        const currentIn = gasInput.value.trim();
+        if (currentIn) {
+            localStorage.setItem(GAS_URL_KEY, currentIn);
+            return currentIn;
+        }
+        return DEFAULT_GAS_URL;
+    }
+
     function getRecords() {
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
@@ -419,54 +476,76 @@ input:focus, textarea:focus {
         }
     }
 
-    function saveRecordsList(list) {
+    function saveRecordsLocal(list) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
         renderSidebarRecords();
     }
 
-    // Login Handler with Lockout Protection
+    // Master Login
     const loginScreen = document.getElementById("login-screen");
     const studioApp = document.getElementById("studio-app");
     const loginPass = document.getElementById("login-pass");
     const loginErr = document.getElementById("login-err");
 
-    function checkLogin() {
-        if (failedAttempts >= 5) {
-            loginErr.style.display = "block";
-            loginErr.textContent = "⏳ बहुत सारे गलत प्रयास! कृपया पेज रिफ्रेश करें।";
-            return;
-        }
-        if (loginPass.value.trim() === PASS_KEY) {
+    function verifyMasterLogin() {
+        if (loginPass.value.trim() === MASTER_PASS) {
             loginScreen.style.display = "none";
             studioApp.style.display = "block";
-            sessionStorage.setItem("studio_auth", "1");
+            sessionStorage.setItem("studio_master_auth", "1");
             initStudio();
         } else {
-            failedAttempts++;
             loginErr.style.display = "block";
-            loginErr.textContent = "❌ गलत पासवर्ड! (" + failedAttempts + "/5)";
         }
     }
 
-    document.getElementById("login-btn").addEventListener("click", checkLogin);
-    loginPass.addEventListener("keydown", e => { if (e.key === "Enter") checkLogin(); });
+    document.getElementById("login-btn").addEventListener("click", verifyMasterLogin);
+    loginPass.addEventListener("keydown", e => { if (e.key === "Enter") verifyMasterLogin(); });
     document.getElementById("logout-btn").addEventListener("click", () => {
-        sessionStorage.removeItem("studio_auth");
+        sessionStorage.removeItem("studio_master_auth");
         location.reload();
     });
 
-    if (sessionStorage.getItem("studio_auth") === "1") {
+    if (sessionStorage.getItem("studio_master_auth") === "1") {
         loginScreen.style.display = "none";
         studioApp.style.display = "block";
         initStudio();
     }
 
-    // Studio Initialization
     function initStudio() {
+        const storedUrl = localStorage.getItem(GAS_URL_KEY);
+        gasInput.value = (storedUrl && storedUrl.trim() !== "") ? storedUrl.trim() : DEFAULT_GAS_URL;
+        localStorage.setItem(GAS_URL_KEY, gasInput.value);
         renderSidebarRecords();
-        const records = getRecords();
-        if (records.length > 0) loadRecordIntoForm(records[0]);
+        const list = getRecords();
+        if (list.length > 0) loadRecordIntoForm(list[0]);
     }
+
+    document.getElementById("reset-gas-url-btn").addEventListener("click", () => {
+        gasInput.value = DEFAULT_GAS_URL;
+        localStorage.setItem(GAS_URL_KEY, DEFAULT_GAS_URL);
+        setStatus("✅ Default Google Script URL Restored!", "#e8f5e9", "#1b5e20");
+    });
+
+    // Test Cloud Connection
+    document.getElementById("test-cloud-btn").addEventListener("click", async () => {
+        const url = getActiveGasUrl();
+        try {
+            setStatus("⏳ Google Apps Script से कनेक्शन जाँचा जा रहा है...", "#e3f2fd", "#0d47a1");
+            const res = await fetch(url + "?action=list", { method: "GET", redirect: "follow" });
+            const text = await res.text();
+            let json = null;
+            try { json = JSON.parse(text); } catch (err) {}
+
+            if (json && json.status === "ok") {
+                const count = Array.isArray(json.records) ? json.records.length : 0;
+                setStatus("✅ Cloud Connected! (" + count + " records in Google Sheet)", "#e8f5e9", "#1b5e20");
+            } else {
+                setStatus("⚠️ URL खुला है पर JSON नहीं मिला। सुनिश्चित करें कि Code.gs Deploy किया गया है।", "#fff3e0", "#e65100");
+            }
+        } catch (err) {
+            setStatus("❌ कनेक्शन एरर: Apps Script में 'Who has access: Anyone' सेट करें।", "#ffebee", "#c62828");
+        }
+    });
 
     function renderSidebarRecords() {
         const listEl = document.getElementById("records-list");
@@ -477,10 +556,10 @@ input:focus, textarea:focus {
             div.className = "record-item";
             div.innerHTML = `
                 <strong>${rec.groomEn} ❤️ ${rec.brideEn}</strong>
-                <span style="font-size:11.5px; color:#666;">📅 ${rec.weddingDate}</span>
+                <span style="font-size:11px; color:#555;">👤 ID: ${rec.clientUser || "abhishek"} | 📅 ${rec.weddingDate}</span>
                 <div style="margin-top:6px;">
-                    <button type="button" class="btn" style="padding:4px 10px; font-size:11px;" data-load="${rec.id}">✏️ Edit</button>
-                    <button type="button" class="btn btn-red" style="padding:4px 10px; font-size:11px;" data-del="${rec.id}">🗑️ Delete</button>
+                    <button type="button" class="btn" style="padding:3px 9px; font-size:11px;" data-load="${rec.id}">✏️ Edit</button>
+                    <button type="button" class="btn btn-red" style="padding:3px 9px; font-size:11px;" data-del="${rec.id}">🗑️ Delete</button>
                 </div>
             `;
             listEl.appendChild(div);
@@ -494,10 +573,12 @@ input:focus, textarea:focus {
         });
 
         listEl.querySelectorAll("[data-del]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                if (!confirm("क्या आप इस रिकॉर्ड को डिलीट करना चाहते हैं?")) return;
-                const filtered = getRecords().filter(r => r.id !== btn.dataset.del);
-                saveRecordsList(filtered);
+            btn.addEventListener("click", async () => {
+                if (!confirm("क्या आप इस रिकॉर्ड को लोकल और Google Sheet दोनों से डिलीट करना चाहते हैं?")) return;
+                const delId = btn.dataset.del;
+                const filtered = getRecords().filter(r => r.id !== delId);
+                saveRecordsLocal(filtered);
+                await syncToGoogleSheet({ action: "delete", id: delId });
             });
         });
     }
@@ -505,13 +586,13 @@ input:focus, textarea:focus {
     function renderEventsEditor(events) {
         const container = document.getElementById("events-editor-list");
         container.innerHTML = "";
-        events.forEach((ev, idx) => {
+        events.forEach(ev => {
             const row = document.createElement("div");
             row.className = "event-row";
             row.innerHTML = `
                 <input type="text" class="ev-title-in" value="${ev.title}" placeholder="कार्यक्रम का नाम">
                 <input type="text" class="ev-date-in" value="${ev.date}" placeholder="तारीख एवं दिन">
-                <button type="button" class="btn btn-red ev-remove-btn" style="padding:6px 10px;">✕</button>
+                <button type="button" class="btn btn-red ev-remove-btn" style="padding:5px 9px;">✕</button>
             `;
             row.querySelector(".ev-remove-btn").addEventListener("click", () => row.remove());
             container.appendChild(row);
@@ -523,9 +604,9 @@ input:focus, textarea:focus {
         const row = document.createElement("div");
         row.className = "event-row";
         row.innerHTML = `
-            <input type="text" class="ev-title-in" placeholder="कार्यक्रम का नाम (जैसे: हल्दी कलश)">
-            <input type="text" class="ev-date-in" placeholder="तारीख (जैसे: 01 दिसंबर 2026)">
-            <button type="button" class="btn btn-red ev-remove-btn" style="padding:6px 10px;">✕</button>
+            <input type="text" class="ev-title-in" placeholder="कार्यक्रम का नाम">
+            <input type="text" class="ev-date-in" placeholder="तारीख एवं दिन">
+            <button type="button" class="btn btn-red ev-remove-btn" style="padding:5px 9px;">✕</button>
         `;
         row.querySelector(".ev-remove-btn").addEventListener("click", () => row.remove());
         container.appendChild(row);
@@ -533,33 +614,35 @@ input:focus, textarea:focus {
 
     function loadRecordIntoForm(rec) {
         document.getElementById("record-id").value = rec.id;
-        document.getElementById("f-groom-en").value = rec.groomEn;
-        document.getElementById("f-groom-hi").value = rec.groomHi;
-        document.getElementById("f-groom-parents").value = rec.groomParents;
-        document.getElementById("f-groom-addr").value = rec.groomAddr;
-        document.getElementById("f-bride-en").value = rec.brideEn;
-        document.getElementById("f-bride-hi").value = rec.brideHi;
-        document.getElementById("f-bride-parents").value = rec.brideParents;
-        document.getElementById("f-bride-addr").value = rec.brideAddr;
-        document.getElementById("f-om-src").value = rec.omSrc;
-        document.getElementById("f-groom-src").value = rec.groomSrc;
-        document.getElementById("f-bride-src").value = rec.brideSrc;
-        document.getElementById("prev-om").src = rec.omSrc;
-        document.getElementById("prev-groom").src = rec.groomSrc;
-        document.getElementById("prev-bride").src = rec.brideSrc;
-        document.getElementById("f-venue").value = rec.venue;
-        document.getElementById("f-wedding-date").value = rec.weddingDate;
-        document.getElementById("f-darshan").value = rec.darshan;
-        document.getElementById("f-vinit").value = rec.vinit;
-        document.getElementById("f-phone").value = rec.phone;
-        document.getElementById("f-whatsapp").value = rec.whatsapp;
-        document.getElementById("f-firm-name").value = rec.firmName;
-        document.getElementById("f-firm-details").value = rec.firmDetails;
+        document.getElementById("f-client-user").value = rec.clientUser || "abhishek";
+        document.getElementById("f-client-pass").value = rec.clientPass || "Abhi@2026";
+        document.getElementById("f-groom-en").value = rec.groomEn || "";
+        document.getElementById("f-groom-hi").value = rec.groomHi || "";
+        document.getElementById("f-groom-parents").value = rec.groomParents || "";
+        document.getElementById("f-groom-addr").value = rec.groomAddr || "";
+        document.getElementById("f-bride-en").value = rec.brideEn || "";
+        document.getElementById("f-bride-hi").value = rec.brideHi || "";
+        document.getElementById("f-bride-parents").value = rec.brideParents || "";
+        document.getElementById("f-bride-addr").value = rec.brideAddr || "";
+        document.getElementById("f-om-src").value = rec.omSrc || "om.png";
+        document.getElementById("f-groom-src").value = rec.groomSrc || "groom.jpg";
+        document.getElementById("f-bride-src").value = rec.brideSrc || "bride.jpg";
+        document.getElementById("prev-om").src = rec.omSrc || "om.png";
+        document.getElementById("prev-groom").src = rec.groomSrc || "groom.jpg";
+        document.getElementById("prev-bride").src = rec.brideSrc || "bride.jpg";
+        document.getElementById("f-venue").value = rec.venue || "";
+        document.getElementById("f-wedding-date").value = rec.weddingDate || "2026-12-02";
+        document.getElementById("f-darshan").value = rec.darshan || "";
+        document.getElementById("f-vinit").value = rec.vinit || "";
+        document.getElementById("f-phone").value = rec.phone || "";
+        document.getElementById("f-whatsapp").value = rec.whatsapp || "";
+        document.getElementById("f-firm-name").value = rec.firmName || "";
+        document.getElementById("f-firm-details").value = rec.firmDetails || "";
         renderEventsEditor(rec.events || []);
     }
 
-    // Smart Auto-Fit Image Resizer (Converts uploaded photo to lightweight auto-fitted Base64)
-    function setupAutoFitUpload(fileInputId, textInputId, previewImgId) {
+    // Auto-Fit Image Uploader
+    function setupAutoFitUpload(fileInputId, textInputId, previewImgId, isPng) {
         document.getElementById(fileInputId).addEventListener("change", function (e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -568,17 +651,21 @@ input:focus, textarea:focus {
                 const img = new Image();
                 img.onload = function () {
                     const canvas = document.createElement("canvas");
-                    const size = 360;
+                    const size = 340;
                     canvas.width = size;
                     canvas.height = size;
                     const c = canvas.getContext("2d");
-                    c.fillStyle = "#ffffff";
-                    c.fillRect(0, 0, size, size);
-                    const ratio = Math.max(size / img.width, size / img.height);
+                    if (!isPng) {
+                        c.fillStyle = "#ffffff";
+                        c.fillRect(0, 0, size, size);
+                    }
+                    const ratio = isPng
+                        ? Math.min(size / img.width, size / img.height)
+                        : Math.max(size / img.width, size / img.height);
                     const nw = img.width * ratio;
                     const nh = img.height * ratio;
                     c.drawImage(img, (size - nw) / 2, (size - nh) / 2, nw, nh);
-                    const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+                    const dataUrl = isPng ? canvas.toDataURL("image/png") : canvas.toDataURL("image/jpeg", 0.85);
                     document.getElementById(textInputId).value = dataUrl;
                     document.getElementById(previewImgId).src = dataUrl;
                 };
@@ -587,9 +674,9 @@ input:focus, textarea:focus {
             reader.readAsDataURL(file);
         });
     }
-    setupAutoFitUpload("file-om", "f-om-src", "prev-om");
-    setupAutoFitUpload("file-groom", "f-groom-src", "prev-groom");
-    setupAutoFitUpload("file-bride", "f-bride-src", "prev-bride");
+    setupAutoFitUpload("file-om", "f-om-src", "prev-om", true);
+    setupAutoFitUpload("file-groom", "f-groom-src", "prev-groom", false);
+    setupAutoFitUpload("file-bride", "f-bride-src", "prev-bride", false);
 
     function collectFormData() {
         const events = [];
@@ -601,6 +688,8 @@ input:focus, textarea:focus {
 
         return {
             id: document.getElementById("record-id").value || ("rec_" + Date.now()),
+            clientUser: document.getElementById("f-client-user").value.trim() || "abhishek",
+            clientPass: document.getElementById("f-client-pass").value.trim() || "Abhi@2026",
             groomEn: document.getElementById("f-groom-en").value.trim(),
             groomHi: document.getElementById("f-groom-hi").value.trim(),
             groomParents: document.getElementById("f-groom-parents").value.trim(),
@@ -624,43 +713,94 @@ input:focus, textarea:focus {
         };
     }
 
-    // Save / Update Record
-    document.getElementById("save-record-btn").addEventListener("click", () => {
+    // GOOGLE SHEET & DRIVE CLOUD SYNC FUNCTION
+    async function syncToGoogleSheet(payload) {
+        const gasUrl = getActiveGasUrl();
+        try {
+            setStatus("⏳ Google Sheet & Drive में डेटा सेव हो रहा है...", "#e3f2fd", "#0d47a1");
+            const res = await fetch(gasUrl, {
+                method: "POST",
+                redirect: "follow",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
+            const json = await res.json();
+            if (json && json.status === "ok") {
+                setStatus("✅ Google Sheet & Drive में सफलतापूर्वक सेव हो गया!", "#e8f5e9", "#1b5e20");
+                return json;
+            } else {
+                setStatus("⚠️ Cloud Response: " + (json.message || "Check Script"), "#fff3e0", "#e65100");
+                return null;
+            }
+        } catch (err) {
+            setStatus("⚠️ Local में सेव हो गया (Cloud Sync के लिए Script Permission जाँचें)", "#fff3e0", "#e65100");
+            return null;
+        }
+    }
+
+    // Sync from Google Sheet
+    document.getElementById("sync-from-cloud-btn").addEventListener("click", async () => {
+        const gasUrl = getActiveGasUrl();
+        try {
+            setStatus("⏳ Google Sheet से रिकॉर्ड लोड हो रहे हैं...", "#e3f2fd", "#0d47a1");
+            const res = await fetch(gasUrl + "?action=list", { method: "GET", redirect: "follow" });
+            const json = await res.json();
+            if (json && json.status === "ok" && Array.isArray(json.records) && json.records.length > 0) {
+                saveRecordsLocal(json.records);
+                loadRecordIntoForm(json.records[0]);
+                setStatus("✅ " + json.records.length + " रिकॉर्ड Google Sheet से लोड हो गए!", "#e8f5e9", "#1b5e20");
+            } else {
+                setStatus("ℹ️ Google Sheet में अभी कोई रिकॉर्ड नहीं है। पहले Save दबाएँ।", "#fff3e0", "#e65100");
+            }
+        } catch (e) {
+            setStatus("❌ लोड त्रुटि: सुनिश्चित करें कि Apps Script 'Anyone' पर Deployed है।", "#ffebee", "#c62828");
+        }
+    });
+
+    // Save Record Button
+    document.getElementById("save-record-btn").addEventListener("click", async () => {
         const data = collectFormData();
         const list = getRecords();
         const idx = list.findIndex(r => r.id === data.id);
         if (idx >= 0) list[idx] = data;
         else list.unshift(data);
-        saveRecordsList(list);
-        alert("✅ रिकॉर्ड सफलतापूर्वक सेव/अपडेट हो गया!");
+        saveRecordsLocal(list);
+        await syncToGoogleSheet({ action: "save", record: data });
     });
 
-    // New Blank Record
+    // New Blank Card
     document.getElementById("new-record-btn").addEventListener("click", () => {
         const copy = JSON.parse(JSON.stringify(defaultRecord));
         copy.id = "rec_" + Date.now();
+        copy.clientUser = "client_" + Math.floor(100 + Math.random() * 900);
+        copy.clientPass = "Vivah@2026";
         copy.groomEn = "New Groom Name";
         copy.brideEn = "New Bride Name";
         loadRecordIntoForm(copy);
     });
 
-    // Export Database Backup JSON
+    // Export Local JSON Backup
     document.getElementById("export-db-btn").addEventListener("click", () => {
         const blob = new Blob([JSON.stringify(getRecords(), null, 2)], { type: "application/json" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = "wedding_studio_backup.json";
+        a.download = "wedding_studio_records.json";
         a.click();
     });
 
-    // 1-CLICK READY-TO-HOST WEBPAGE GENERATOR (With Escaped <\/script> so it NEVER breaks!)
-    document.getElementById("download-html-btn").addEventListener("click", () => {
-        const d = collectFormData();
+    // Build Complete Ready-to-Host index.html (Safe Tag Escaping)
+    function buildIndexHtml(d) {
+        const closeScript = "<" + "/script>";
+        const closeStyle = "<" + "/style>";
+        const closeHead = "<" + "/head>";
+        const closeBody = "<" + "/body>";
+        const closeHtml = "<" + "/html>";
+
         const eventsHtml = d.events.map(ev =>
             `<div class="event-card seq-step"><div class="event-name">${ev.title}</div><div class="event-date">📅 ${ev.date}</div></div>`
         ).join("\n");
 
-        const htmlContent = `<!DOCTYPE html>
+        return `<!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
@@ -670,116 +810,311 @@ input:focus, textarea:focus {
 <style>
 :root { --pink-royal:#7b003a; --pink-deep:#9c0d4b; --pink-bright:#ad1457; --gold:#d4af37; --gold-light:#ffeb99; --gold-dark:#8c6200; }
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; min-height:100%; background:radial-gradient(circle at center, #6a0032 0%, #380018 60%, #1f000d 100%); color:#2c0014; font-family:'Noto Sans Devanagari','Poppins',sans-serif; font-size:14px; text-align:center; overflow-x:hidden; }
+html, body { width:100%; min-height:100%; background:radial-gradient(circle at center, #6a0032 0%, #380018 60%, #1f000d 100%); color:#2c0014; font-family:'Noto Sans Devanagari','Poppins',sans-serif; font-size:13.5px; text-align:center; overflow-x:hidden; scroll-behavior:smooth; }
 body.locked { overflow:hidden; height:100vh; }
-button { cursor:pointer; font-family:inherit; }
+button { cursor:pointer; font-family:inherit; outline:none; }
 #doors-screen { position:fixed; inset:0; width:100%; height:100%; z-index:9999; display:flex; perspective:1600px; }
 .door { width:50%; height:100%; background:linear-gradient(135deg, #9c0d4b 0%, #6a0032 55%, #2a0015 100%); border:5px solid var(--gold); transition:transform 2.2s ease; }
-.door-left { transform-origin:left center; } .door-right { transform-origin:right center; }
-#doors-screen.open .door-left { transform:rotateY(-110deg); } #doors-screen.open .door-right { transform:rotateY(110deg); }
-#door-center-box { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10001; width:88%; max-width:340px; background:#5a002c; border:2.5px solid var(--gold-light); border-radius:22px; padding:22px 16px; color:#fff; }
-#open-btn { background:linear-gradient(45deg, #d4af37, #fff6b5); color:#3b001b; border:2px solid #fff; border-radius:50px; padding:10px 26px; font-size:16px; font-weight:700; margin-top:10px; }
-#main-content { max-width:600px; margin:0 auto; padding:14px 10px 45px 10px; }
-.royal-page-card { background:radial-gradient(circle at top, #ffffff 0%, #fff4f8 70%, #ffe9f2 100%); border:3px solid var(--gold); border-radius:20px; padding:20px 14px; margin-bottom:16px; }
-.seq-step { opacity:0; transform:translateY(16px); transition:all 0.6s ease; } .seq-step.show { opacity:1; transform:translateY(0); }
-.ganesh-auto-box { width:5cm; height:5cm; max-width:135px; max-height:135px; margin:8px auto; border-radius:50%; border:3px solid var(--gold); overflow:hidden; background:#fff; display:flex; align-items:center; justify-content:center; padding:4px; }
+.door-left { transform-origin:left center; border-right:3px solid var(--gold-light); }
+.door-right { transform-origin:right center; border-left:3px solid var(--gold-light); }
+#doors-screen.open .door-left { transform:rotateY(-110deg); }
+#doors-screen.open .door-right { transform:rotateY(110deg); }
+#door-center-box { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10001; width:88%; max-width:340px; background:#5a002c; border:2.5px solid var(--gold-light); border-radius:22px; padding:22px 16px; color:#fff; box-shadow:0 0 35px rgba(255,215,0,0.6); transition:opacity 0.4s ease; }
+#open-btn { background:linear-gradient(45deg, #d4af37, #fff6b5); color:#3b001b; border:2px solid #fff; border-radius:50px; padding:10px 26px; font-size:15px; font-weight:700; margin-top:10px; }
+#main-content { max-width:580px; margin:0 auto; padding:14px 10px 45px 10px; }
+.royal-page-card { background:radial-gradient(circle at top, #ffffff 0%, #fff4f8 70%, #ffe9f2 100%); border:3px solid var(--gold); border-radius:20px; padding:18px 14px; margin-bottom:16px; box-shadow:0 10px 28px rgba(0,0,0,0.45); overflow:hidden; }
+.seq-step { opacity:0; transform:translateY(16px); transition:all 0.6s ease; }
+.seq-step.show { opacity:1; transform:translateY(0); }
+.ganesh-auto-box { width:5cm; height:5cm; max-width:130px; max-height:130px; margin:8px auto; border-radius:50%; border:3px solid var(--gold); overflow:hidden; background:#fff; display:flex; align-items:center; justify-content:center; padding:4px; box-shadow:0 0 15px rgba(212,175,55,0.75); }
 .om-image { width:100%; height:100%; border-radius:50%; object-fit:contain; }
-.mantra-box { background:#ffeef4; border:1px solid var(--gold); border-left:4px solid var(--pink-bright); border-right:4px solid var(--pink-bright); padding:9px; margin:8px auto; border-radius:10px; font-size:13px; color:var(--pink-royal); font-weight:600; }
-.profile-img-box { width:115px; height:115px; margin:8px auto; border-radius:50%; border:3px solid var(--gold); overflow:hidden; }
+.mantra-box { background:#ffeef4; border:1px solid var(--gold); border-left:4px solid var(--pink-bright); border-right:4px solid var(--pink-bright); padding:8px; margin:8px auto; border-radius:10px; font-size:12.5px; line-height:1.6; color:var(--pink-royal); font-weight:600; }
+.profile-img-box { width:110px; height:110px; margin:8px auto; border-radius:50%; border:3px solid var(--gold); overflow:hidden; background:#fff0f5; }
 .profile-img { width:100%; height:100%; object-fit:cover; }
-.detail-pill { background:#fff; border:1px solid var(--gold); border-radius:10px; padding:9px; margin:7px auto; font-size:13px; }
-.event-card { background:#fff; border:1px solid var(--gold); border-left:4px solid var(--pink-bright); border-radius:10px; padding:10px; margin:8px auto; text-align:left; }
-.event-name { font-size:14px; color:var(--pink-royal); font-weight:700; }
-.event-date { font-size:12.5px; color:#5d2a42; }
+.detail-pill { background:#fff; border:1px solid var(--gold); border-radius:10px; padding:8px 10px; margin:6px auto; font-size:12.5px; line-height:1.55; }
+.event-card { background:#fff; border:1px solid var(--gold); border-left:4px solid var(--pink-bright); border-radius:10px; padding:9px 12px; margin:7px auto; text-align:left; }
+.event-name { font-size:13.5px; color:var(--pink-royal); font-weight:700; }
+.event-date { font-size:12px; color:#5d2a42; }
 .timer-container { display:flex; justify-content:center; gap:8px; margin:10px 0; }
-.time-box { background:var(--pink-royal); color:#fff; border:1.5px solid var(--gold); padding:8px; border-radius:10px; min-width:58px; }
+.time-box { background:var(--pink-royal); color:#fff; border:1.5px solid var(--gold); padding:8px 6px; border-radius:10px; min-width:56px; }
 .time-box span { display:block; font-size:18px; font-weight:700; color:var(--gold-light); }
-.btn-call { display:inline-block; background:var(--pink-bright); color:#fff; text-decoration:none; padding:8px 16px; border-radius:30px; font-size:13px; font-weight:600; margin:4px; }
-.btn-whatsapp { display:inline-block; background:#128C7E; color:#fff; text-decoration:none; padding:8px 16px; border-radius:30px; font-size:13px; font-weight:600; margin:4px; }
-</style>
-</head>
+.btn-call { display:inline-block; background:var(--pink-bright); color:#fff; text-decoration:none; padding:8px 15px; border-radius:30px; font-size:12.5px; font-weight:600; margin:4px; border:none; }
+.btn-whatsapp { display:inline-block; background:#128C7E; color:#fff; text-decoration:none; padding:8px 15px; border-radius:30px; font-size:12.5px; font-weight:600; margin:4px; border:none; }
+.btn-gold { display:inline-block; background:#996515; color:#fff; text-decoration:none; padding:7px 14px; border-radius:30px; font-size:12px; font-weight:600; margin:4px; border:none; }
+.input-field { padding:8px 10px; border:1.5px solid var(--gold); border-radius:8px; width:90%; max-width:260px; font-size:12.5px; text-align:center; margin-bottom:6px; }
+.prefix-chip { background:#fff; border:1px solid var(--gold-dark); color:var(--pink-royal); padding:3px 8px; border-radius:12px; font-size:11px; font-weight:600; margin:2px; }
+#client-login-box, #client-share-panel { display:none; background:#fff0f6; border:1.5px solid var(--gold); border-radius:12px; padding:12px 10px; margin:10px auto; max-width:330px; }
+#music-btn { position:fixed; bottom:14px; right:14px; z-index:900; background:var(--pink-bright); color:#fff; border:1.5px solid var(--gold); padding:7px 13px; border-radius:30px; font-size:12px; font-weight:600; display:none; }
+.flower { position:fixed; top:-30px; z-index:9000; pointer-events:none; animation:fall linear forwards; }
+@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(105vh) rotate(360deg); opacity:0; } }
+${closeStyle}
+${closeHead}
 <body class="locked">
 <div id="doors-screen">
     <div class="door door-left"></div><div class="door door-right"></div>
     <div id="door-center-box">
-        <h2 style="color:var(--gold-light); font-size:22px;">॥ शुभ विवाह ॥</h2>
-        <p style="margin:6px 0;">${d.groomEn} & ${d.brideEn}</p>
+        <div style="font-size:26px;">👑</div>
+        <h2 style="color:var(--gold-light); font-size:21px;">॥ शुभ विवाह ॥</h2>
+        <p style="margin:5px 0; font-size:14px; color:#ffe57f;">${d.groomEn} & ${d.brideEn}</p>
+        <p id="door-guest-line" style="font-size:12px; color:#fff; margin-bottom:8px;">सप्रेम निमंत्रण</p>
         <button id="open-btn" type="button">🚪 निमंत्रण खोलें</button>
     </div>
 </div>
+<audio id="weddingMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
+<button id="music-btn" type="button">🔊 Music ON</button>
 <main id="main-content">
-    <section class="royal-page-card">
-        <div id="guest-greeting" class="seq-step" style="background:var(--pink-royal); color:#fff; padding:10px; border-radius:12px; margin-bottom:10px;">
-            <div style="font-size:12px; color:var(--gold-light);">✨ सप्रेम सादर आमंत्रण ✨</div>
-            <strong id="guest-name-display" style="font-size:18px;">माननीय अतिथि महोदय</strong>
+    <section class="royal-page-card" id="page-1">
+        <div id="guest-greeting" class="seq-step" style="background:var(--pink-royal); color:#fff; padding:10px; border-radius:12px; margin-bottom:10px; border:1.5px solid var(--gold);">
+            <div style="font-size:11.5px; color:var(--gold-light);">✨ सप्रेम सादर आमंत्रण ✨</div>
+            <strong id="guest-name-display" style="font-size:17px; color:#ffeb99;">माननीय अतिथि महोदय</strong>
+            <div style="font-size:11.5px; color:#ffeef5;">आप सपरिवार सादर आमंत्रित हैं।</div>
         </div>
         <div class="ganesh-auto-box seq-step"><img src="${d.omSrc}" class="om-image" alt="Ganesh"></div>
-        <div class="seq-step" style="font-weight:700; color:var(--pink-royal); margin:6px 0;">॥ श्री गणेशाय नमः ॥</div>
-        <div class="mantra-box seq-step">॥ वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ । निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</div>
-        <div class="mantra-box seq-step">॥ मंगलम भगवान विष्णुः मंगलम गरुड़ध्वजः । मंगलम पुण्डरीकाक्षः मंगलाय तनो हरिः ॥</div>
+        <div class="seq-step" style="font-weight:700; color:var(--pink-royal); font-size:15px; margin:4px 0;">🪔 ॥ श्री गणेशाय नमः ॥ 🪔</div>
+        <div class="mantra-box seq-step">॥ वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</div>
+        <div class="mantra-box seq-step">॥ मंगलम भगवान विष्णुः मंगलम गरुड़ध्वजः ।<br>मंगलम पुण्डरीकाक्षः मंगलाय तनो हरिः ॥</div>
+        <div class="seq-step"><h1 style="color:var(--pink-bright); font-size:22px; margin-top:6px;">शुभ विवाह</h1><p style="font-size:12.5px; line-height:1.6;">ईश्वर की असीम कृपा एवं बुजुर्गों के आशीर्वाद से हमारे परिवार में शुभ विवाह का पावन अवसर आया है। कृपया सपरिवार पधारकर वर-वधू को आशीर्वाद दें।</p></div>
     </section>
-    <section class="royal-page-card">
-        <h3 style="color:var(--pink-royal);">🤵 वर (The Groom)</h3>
-        <div class="profile-img-box"><img src="${d.groomSrc}" class="profile-img" alt="Groom"></div>
-        <div style="font-size:18px; font-weight:700; color:var(--pink-royal);">${d.groomEn}</div>
-        <div style="font-size:14px; color:var(--gold-dark);">${d.groomHi}</div>
-        <div class="detail-pill"><strong>सुपुत्र:</strong> ${d.groomParents}</div>
-        <div class="detail-pill"><strong>पता:</strong> ${d.groomAddr}</div>
+
+    <section class="royal-page-card stagger-sec">
+        <h3 class="seq-step" style="color:var(--pink-royal); font-size:15px;">🤵 प्रथम परिचय: वर (The Groom)</h3>
+        <div class="profile-img-box seq-step"><img src="${d.groomSrc}" class="profile-img" alt="Groom"></div>
+        <div class="seq-step" style="font-size:17px; font-weight:700; color:var(--pink-royal);">${d.groomEn}</div>
+        <div class="seq-step" style="font-size:13.5px; color:var(--gold-dark); font-weight:600;">${d.groomHi}</div>
+        <div class="detail-pill seq-step"><strong>👨‍👩‍👦 सुपुत्र:</strong> ${d.groomParents}</div>
+        <div class="detail-pill seq-step"><strong>🏠 पता:</strong> ${d.groomAddr}</div>
     </section>
-    <section class="royal-page-card">
-        <h3 style="color:var(--pink-royal);">👰 वधू (The Bride)</h3>
-        <div class="profile-img-box"><img src="${d.brideSrc}" class="profile-img" alt="Bride"></div>
-        <div style="font-size:18px; font-weight:700; color:var(--pink-royal);">${d.brideEn}</div>
-        <div style="font-size:14px; color:var(--gold-dark);">${d.brideHi}</div>
-        <div class="detail-pill"><strong>सुपुत्री:</strong> ${d.brideParents}</div>
-        <div class="detail-pill"><strong>पता:</strong> ${d.brideAddr}</div>
+
+    <section class="royal-page-card stagger-sec">
+        <h3 class="seq-step" style="color:var(--pink-royal); font-size:15px;">👰 द्वितीय परिचय: वधू (The Bride)</h3>
+        <div class="profile-img-box seq-step"><img src="${d.brideSrc}" class="profile-img" alt="Bride"></div>
+        <div class="seq-step" style="font-size:17px; font-weight:700; color:var(--pink-royal);">${d.brideEn}</div>
+        <div class="seq-step" style="font-size:13.5px; color:var(--gold-dark); font-weight:600;">${d.brideHi}</div>
+        <div class="detail-pill seq-step"><strong>👨‍👩‍👧 सुपुत्री:</strong> ${d.brideParents}</div>
+        <div class="detail-pill seq-step"><strong>🏠 पता:</strong> ${d.brideAddr}</div>
     </section>
-    <section class="royal-page-card">
-        <h3 style="color:var(--pink-royal); margin-bottom:8px;">🌸 मांगलिक कार्यक्रम 🌸</h3>
+
+    <section class="royal-page-card stagger-sec" id="couple-together" style="background:radial-gradient(circle, #9c0d4b 0%, #4a0022 100%); color:#fff;">
+        <p class="seq-step" style="color:var(--gold-light); font-size:13px;">✨ जन्म-जन्मांतर का पावन गठबंधन ✨</p>
+        <div class="seq-step" style="display:flex; justify-content:center; align-items:center; gap:12px; margin:10px 0;">
+            <img src="${d.groomSrc}" style="width:78px; height:78px; border-radius:50%; object-fit:cover; border:2.5px solid var(--gold-light);">
+            <span style="font-size:24px;">❤️</span>
+            <img src="${d.brideSrc}" style="width:78px; height:78px; border-radius:50%; object-fit:cover; border:2.5px solid var(--gold-light);">
+        </div>
+        <div class="seq-step" style="font-size:18px; font-weight:700; color:var(--gold-light);">${d.groomEn} & ${d.brideEn}</div>
+        <button type="button" id="bless-btn" class="btn-gold" style="margin-top:8px;">🌸 पुष्प वर्षा करें 🌸</button>
+    </section>
+
+    <section class="royal-page-card stagger-sec">
+        <h3 class="seq-step" style="color:var(--pink-royal); font-size:16px; margin-bottom:8px;">🌸 मांगलिक कार्यक्रम 🌸</h3>
         ${eventsHtml}
-        <div class="detail-pill"><strong>📍 विवाह स्थल:</strong> ${d.venue}</div>
+        <div class="detail-pill seq-step" style="background:#fff5f8;">
+            <strong style="color:var(--pink-royal);">📍 विवाह स्थल:</strong><br>${d.venue}<br>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.venue)}" target="_blank" class="btn-gold" style="margin-top:6px;">🗺️ Google Maps</a>
+        </div>
     </section>
-    <section class="royal-page-card">
-        <h3 style="color:var(--pink-royal);">⏳ शुभ विवाह में शेष समय</h3>
-        <div class="timer-container">
+
+    <section class="royal-page-card stagger-sec">
+        <h3 class="seq-step" style="color:var(--pink-royal); font-size:16px;">⏳ शुभ विवाह में शेष समय</h3>
+        <div class="timer-container seq-step">
             <div class="time-box"><span id="days">00</span>दिन</div>
             <div class="time-box"><span id="hours">00</span>घंटे</div>
             <div class="time-box"><span id="minutes">00</span>मिनट</div>
             <div class="time-box"><span id="seconds">00</span>सेकंड</div>
         </div>
-        <div class="detail-pill"><strong>🙏 दर्शनाभिलाषी:</strong> ${d.darshan}<br><strong>🌷 विनीत:</strong> ${d.vinit}</div>
-        <a href="tel:+91${d.phone}" class="btn-call">📞 कॉल: ${d.phone}</a>
-        <a href="https://wa.me/${d.whatsapp}" target="_blank" class="btn-whatsapp">💬 WhatsApp</a>
-        <div class="detail-pill" style="background:#fffdf2; border-style:dashed;">
-            <strong style="color:var(--pink-royal);">🏢 ${d.firmName}</strong><br>${d.firmDetails}
+        <div class="detail-pill seq-step"><strong>🙏 दर्शनाभिलाषी:</strong> ${d.darshan}</div>
+        <div class="detail-pill seq-step"><strong>🌷 विनीत:</strong> ${d.vinit}</div>
+        <div class="seq-step">
+            <a href="tel:+91${d.phone}" class="btn-call">📞 कॉल: ${d.phone}</a>
+            <a href="https://wa.me/${d.whatsapp}" target="_blank" class="btn-whatsapp">💬 WhatsApp</a>
         </div>
+        <div class="detail-pill seq-step" style="background:#fffdf2; border-style:dashed; margin-top:10px;">
+            <span style="font-size:10.5px; color:var(--gold-dark); font-weight:700;">🏢 प्रतिष्ठान / प्रेषक (Our Firm)</span><br>
+            <strong style="color:var(--pink-royal); font-size:13.5px;">${d.firmName}</strong><br>
+            <span style="font-size:11.5px; color:#444;">${d.firmDetails}</span>
+        </div>
+
+        <!-- CLIENT USERNAME & PASSWORD PROTECTED GUEST SHARE MENU -->
+        <div id="client-share-panel">
+            <h4 style="color:var(--pink-royal); font-size:14px; margin-bottom:6px;">💌 मेहमान के नाम से निमंत्रण भेजें</h4>
+            <div style="margin-bottom:6px;">
+                <button type="button" class="prefix-chip" data-prefix="श्री ">+ श्री</button>
+                <button type="button" class="prefix-chip" data-prefix="श्रीमती ">+ श्रीमती</button>
+                <button type="button" class="prefix-chip" data-suffix=" एवं परिवार">+ एवं परिवार</button>
+            </div>
+            <input type="text" id="guest-input" class="input-field" placeholder="अतिथि का नाम लिखें">
+            <br>
+            <button type="button" class="btn-whatsapp" id="share-wa-btn">📲 WhatsApp पर भेजें</button>
+            <button type="button" class="btn-gold" id="copy-link-btn">🔗 लिंक कॉपी</button>
+            <br>
+            <button type="button" id="client-lock-btn" style="background:none; border:none; color:var(--pink-royal); font-size:11.5px; margin-top:6px; text-decoration:underline;">🔒 लॉक करें</button>
+        </div>
+
+        <footer style="margin-top:12px; padding-top:8px; border-top:1px dashed var(--gold); font-size:12px; color:var(--pink-royal);">
+            ❤️ आपकी उपस्थिति हमारा सौभाग्य है ❤️<br>
+            <button type="button" id="client-login-toggle" style="background:transparent; border:1px dashed var(--gold); color:#880e4f; padding:3px 10px; border-radius:12px; font-size:11px; margin-top:6px;">🔒 Client / Host Login</button>
+
+            <div id="client-login-box">
+                <p style="font-size:12px; margin-bottom:6px; font-weight:600;">🔑 मेहमान लिंक बनाने के लिए Username व Password डालें:</p>
+                <input type="text" id="c-user-in" class="input-field" placeholder="Username">
+                <input type="password" id="c-pass-in" class="input-field" placeholder="Password">
+                <br>
+                <button type="button" class="btn-call" id="c-unlock-btn" style="padding:5px 14px; font-size:12px;">Unlock</button>
+                <div id="c-err-msg" style="color:#c62828; font-size:11.5px; display:none; margin-top:4px;">❌ गलत Username या Password!</div>
+            </div>
+        </footer>
     </section>
 </main>
 <script>
 (function(){
-    const raw = new URLSearchParams(window.location.search).get("guest");
-    if(raw) document.getElementById("guest-name-display").textContent = "प्रिय " + decodeURIComponent(raw) + " जी";
+    const ASSIGNED_USER = ${JSON.stringify(d.clientUser)};
+    const ASSIGNED_PASS = ${JSON.stringify(d.clientPass)};
+
+    const rawGuest = new URLSearchParams(window.location.search).get("guest");
+    const guestDisplay = document.getElementById("guest-name-display");
+    const doorGuest = document.getElementById("door-guest-line");
+    if(rawGuest && rawGuest.trim() !== ""){
+        const clean = decodeURIComponent(rawGuest).replace(/[-_+]/g, " ").trim();
+        const fmt = clean.endsWith("जी") ? "प्रिय " + clean : "प्रिय " + clean + " जी";
+        guestDisplay.textContent = fmt;
+        doorGuest.textContent = "स्वागतम्: " + fmt;
+    }
+
+    function startRain(max){
+        const petals = ["🌸","🌺","🌹","✨"];
+        let c = 0;
+        const iv = setInterval(() => {
+            if(c >= max){ clearInterval(iv); return; }
+            c++;
+            const f = document.createElement("div");
+            f.className = "flower";
+            f.textContent = petals[Math.floor(Math.random()*petals.length)];
+            f.style.left = (Math.random()*90) + "vw";
+            f.style.fontSize = (14 + Math.random()*10) + "px";
+            const dur = 3 + Math.random()*2;
+            f.style.animationDuration = dur + "s";
+            document.body.appendChild(f);
+            setTimeout(() => f.remove(), dur*1000);
+        }, 250);
+    }
+
+    const music = document.getElementById("weddingMusic");
+    const musicBtn = document.getElementById("music-btn");
+
     document.getElementById("open-btn").addEventListener("click", function(){
         document.body.classList.remove("locked");
         document.getElementById("doors-screen").classList.add("open");
         document.getElementById("door-center-box").style.opacity = "0";
-        document.querySelectorAll(".seq-step").forEach((s, i) => setTimeout(() => s.classList.add("show"), 300 + i * 350));
+        musicBtn.style.display = "block";
+        music.play().catch(()=>{ musicBtn.textContent = "▶ Music चलाएँ"; });
+        document.querySelectorAll("#page-1 .seq-step").forEach((s, i) => setTimeout(() => s.classList.add("show"), 350 + i * 500));
+        startRain(28);
         setTimeout(() => document.getElementById("doors-screen").style.display = "none", 2200);
     });
+
+    musicBtn.addEventListener("click", () => {
+        if(music.paused){ music.play(); musicBtn.textContent = "🔊 Music ON"; }
+        else { music.pause(); musicBtn.textContent = "🔇 Music OFF"; }
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if(e.isIntersecting){
+                e.target.querySelectorAll(".seq-step").forEach((s, i) => setTimeout(() => s.classList.add("show"), i * 240));
+                if(e.target.id === "couple-together") startRain(25);
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".stagger-sec").forEach(sec => obs.observe(sec));
+
+    document.getElementById("bless-btn").addEventListener("click", () => startRain(25));
+
     const tDate = new Date("${d.weddingDate}T00:00:00").getTime();
-    setInterval(() => {
-        const diff = tDate - Date.now();
+    function updateTimer(){
+        const diff = tDate - new Date().getTime();
         if(diff <= 0) return;
         document.getElementById("days").textContent = Math.floor(diff / 86400000);
         document.getElementById("hours").textContent = Math.floor((diff / 3600000) % 24);
         document.getElementById("minutes").textContent = Math.floor((diff / 60000) % 60);
         document.getElementById("seconds").textContent = Math.floor((diff / 1000) % 60);
-    }, 1000);
-})();
-<\/script>
-</body>
-</html>`;
+    }
+    updateTimer(); setInterval(updateTimer, 1000);
 
+    // Client Username + Password Verification
+    const loginToggle = document.getElementById("client-login-toggle");
+    const loginBox = document.getElementById("client-login-box");
+    const sharePanel = document.getElementById("client-share-panel");
+    const uIn = document.getElementById("c-user-in");
+    const pIn = document.getElementById("c-pass-in");
+    const errMsg = document.getElementById("c-err-msg");
+    const gIn = document.getElementById("guest-input");
+
+    loginToggle.addEventListener("click", () => {
+        loginBox.style.display = loginBox.style.display === "block" ? "none" : "block";
+    });
+
+    document.getElementById("c-unlock-btn").addEventListener("click", () => {
+        if(uIn.value.trim() === ASSIGNED_USER && pIn.value.trim() === ASSIGNED_PASS){
+            loginBox.style.display = "none";
+            loginToggle.style.display = "none";
+            sharePanel.style.display = "block";
+            errMsg.style.display = "none";
+        } else {
+            errMsg.style.display = "block";
+        }
+    });
+
+    document.getElementById("client-lock-btn").addEventListener("click", () => {
+        sharePanel.style.display = "none";
+        loginToggle.style.display = "inline-block";
+    });
+
+    document.querySelectorAll(".prefix-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+            const p = chip.dataset.prefix || "", s = chip.dataset.suffix || "";
+            let v = gIn.value.trim();
+            if(p && !v.startsWith(p.trim())) v = p + v;
+            if(s && !v.endsWith(s.trim())) v = v + s;
+            gIn.value = v;
+            guestDisplay.textContent = "प्रिय " + v + " जी";
+        });
+    });
+
+    function buildLink(name){
+        return window.location.href.split("?")[0].split("#")[0] + "?guest=" + encodeURIComponent(name);
+    }
+
+    document.getElementById("share-wa-btn").addEventListener("click", () => {
+        const name = gIn.value.trim();
+        if(!name){ alert("कृपया अतिथि का नाम लिखें!"); return; }
+        const link = buildLink(name);
+        const msg = "🙏 सप्रेम नमस्कार *" + name + " जी*,\\n\\nआपको *${d.groomEn}* एवं *${d.brideEn}* के शुभ विवाह में सपरिवार सादर आमंत्रित किया जाता है।\\n\\n📍 *विवाह स्थल:* ${d.venue}\\n\\n💌 *आपका व्यक्तिगत निमंत्रण कार्ड यहाँ खोलें:*\\n" + link;
+        window.location.href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
+    });
+
+    document.getElementById("copy-link-btn").addEventListener("click", () => {
+        const name = gIn.value.trim();
+        if(!name){ alert("कृपया अतिथि का नाम लिखें!"); return; }
+        navigator.clipboard.writeText(buildLink(name)).then(() => alert("लिंक कॉपी हो गया!"));
+    });
+})();
+${closeScript}
+${closeBody}
+${closeHtml}`;
+    }
+
+    // 1-Click Download + Save to Google Sheet & Google Drive
+    document.getElementById("download-html-btn").addEventListener("click", async () => {
+        const d = collectFormData();
+        const list = getRecords();
+        const idx = list.findIndex(r => r.id === d.id);
+        if (idx >= 0) list[idx] = d;
+        else list.unshift(d);
+        saveRecordsLocal(list);
+
+        const htmlContent = buildIndexHtml(d);
+
+        // 1. Download index.html to Device
         const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -787,6 +1122,14 @@ button { cursor:pointer; font-family:inherit; }
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+
+        // 2. Sync Record + HTML File Backup to Google Sheet & Google Drive
+        await syncToGoogleSheet({
+            action: "save",
+            record: d,
+            htmlBackup: htmlContent,
+            fileName: "index_" + d.id + ".html"
+        });
     });
 })();
 </script>
